@@ -31,7 +31,7 @@ class AppScreen extends StatelessWidget {
           alignment: Alignment.center,
           children: [
             appScreens[currentScreen],
-            const Positioned(bottom: 15, child: CustomNavigationBar()),
+            const Positioned(bottom: 10, child: CustomNavigationBar()),
           ],
         ),
       ),
