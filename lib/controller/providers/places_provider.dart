@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:safari/controller/api_services/get_service.dart';
 import 'package:safari/controller/constants/service_api_constants.dart';
@@ -5,12 +8,12 @@ import 'package:safari/model/place_model.dart';
 
 class PlacesProvider extends ChangeNotifier {
   List<PlaceModel> places = [];
-  bool loadScreenStatus = false;
+  bool successFullApiCall = true;
 
   // getters -> These methods are used to get values
 
-  bool get getLoadScreenStatus {
-    return loadScreenStatus;
+  bool get getSuccessFullApiCall {
+    return successFullApiCall;
   }
 
   List<PlaceModel> get getBeaches {
@@ -55,35 +58,36 @@ class PlacesProvider extends ChangeNotifier {
   Future<dynamic> setPlaces() async {
     List<PlaceModel> tempPlaces = [];
     try {
-      Map<String, dynamic> body =
-          await service(ServiceApi.base_url + 'allplaces.json');
-      if (body.runtimeType != String) {
-        body.forEach((key, value) {
+      dynamic body = await service(ServiceApi.base_url + 'allplaces.json');
+      if (body.runtimeType == String && body.toString() == 'no internet') {
+        return 'no internet';
+      }
+      if (body != null && body.runtimeType != String) {
+        Map<String, dynamic> data = body as Map<String, dynamic>;
+        data.forEach((key, value) {
           tempPlaces.add(PlaceModel.fromJson(value as Map<String, dynamic>));
         });
         places = tempPlaces;
+        successFullApiCall = true;
         notifyListeners();
+        return 'OK';
       } else {
-        if (kDebugMode) {
-          print(body);
-        }
+        successFullApiCall = false;
+        notifyListeners();
+        return body.toString();
       }
+    } on SocketException {
+      successFullApiCall = false;
+      notifyListeners();
+    } on TimeoutException {
+      successFullApiCall = false;
+      notifyListeners();
     } catch (e) {
       if (kDebugMode) {
+        successFullApiCall = false;
         print(e.toString());
       }
     }
-  }
-
-  // This method changes the load screen status to true
-  void startLoading() {
-    loadScreenStatus = true;
-    notifyListeners();
-  }
-
-  // This method changes the load screen status to false
-  void stopLoading() {
-    loadScreenStatus = false;
     notifyListeners();
   }
 }

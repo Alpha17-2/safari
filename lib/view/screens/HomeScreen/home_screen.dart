@@ -14,7 +14,7 @@ class HomeScreen extends StatelessWidget {
       height: displayHeight(context),
       width: displayWidth(context),
       color: Colors.white,
-      padding: const EdgeInsets.only(left: 12, right: 12, top: 10),
+      padding: const EdgeInsets.only(left: 12, top: 10),
       child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -51,21 +51,41 @@ class HomeScreen extends StatelessWidget {
             Text(
               'Popular categories',
               style: TextStyle(
-                  color: Colors.black54,
-                  fontSize: displayWidth(context) * 0.06,
+                  color: Colors.teal,
+                  fontSize: displayWidth(context) * 0.05,
                   fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 10),
             PopularCategories(),
-            const SizedBox(height: 20),
-            Text(
-              'Top trips',
-              style: TextStyle(
-                  color: Colors.black54,
-                  fontSize: displayWidth(context) * 0.06,
-                  fontWeight: FontWeight.w600),
+            const SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Top trips',
+                  style: TextStyle(
+                      color: Colors.teal,
+                      fontSize: displayWidth(context) * 0.05,
+                      fontWeight: FontWeight.w600),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Explore more',
+                      style: TextStyle(
+                          color: Colors.teal[200], fontWeight: FontWeight.w600),
+                    ),
+                    const Icon(
+                      Icons.arrow_forward,
+                      color: Colors.teal,
+                    )
+                  ],
+                )
+              ],
             ),
-            const TopTrips(),
+            const SizedBox(height: 4),
+            TopTrips(),
           ],
         ),
       ),
