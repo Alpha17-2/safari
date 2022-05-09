@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'package:safari/controller/constants/cutom_icons.dart';
 import 'package:safari/controller/constants/device_size.dart';
-import 'package:safari/controller/providers/places_provider.dart';
 
 class PopularCategories extends StatelessWidget {
   final List<Map<String, String>> popularCategories = [
@@ -16,8 +14,9 @@ class PopularCategories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: displayHeight(context) * 0.165,
+    return Container(
+      //color: Colors.pink,
+      height: displayHeight(context) * 0.15,
       width: displayWidth(context),
       child: Center(
         child: ListView.builder(
@@ -31,7 +30,7 @@ class PopularCategories extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   CircleAvatar(
-                    radius: displayWidth(context) * 0.12,
+                    radius: displayWidth(context) * 0.1,
                     backgroundColor: Colors.grey[200],
                     backgroundImage:
                         AssetImage(popularCategories[index]['icon']!),
@@ -43,7 +42,7 @@ class PopularCategories extends StatelessWidget {
                     child: Text(
                       popularCategories[index]['type']!,
                       style:
-                          GoogleFonts.aldrich(color: Colors.teal, fontSize: 16),
+                          GoogleFonts.aldrich(color: Colors.teal, fontSize: 15),
                     ),
                   )
                 ],
