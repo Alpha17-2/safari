@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:safari/controller/constants/device_size.dart';
 import 'package:safari/controller/providers/places_provider.dart';
 import 'package:safari/model/place_model.dart';
+import 'package:safari/view/screens/PlaceDetailScreen/place_detail_screen.dart';
 
 class TopTrips extends StatelessWidget {
   viewPlaceTemplate(BuildContext context, PlaceModel place) {
@@ -87,7 +88,20 @@ class TopTrips extends StatelessWidget {
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
-            return viewPlaceTemplate(context, places[index]);
+            return InkWell(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          PlaceDetailScreen(id: places[index].id),
+                    ));
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: viewPlaceTemplate(context, places[index]),
+              ),
+            );
           },
           itemCount: places.length,
         ));
