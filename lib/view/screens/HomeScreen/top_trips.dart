@@ -97,7 +97,10 @@ class TopTrips extends StatelessWidget {
                           PlaceDetailScreen(id: places[index].id),
                     ));
               },
-              child: viewPlaceTemplate(context, places[index]),
+              child: Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: viewPlaceTemplate(context, places[index]),
+              ),
             );
           },
           itemCount: places.length,
