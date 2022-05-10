@@ -1,15 +1,30 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:safari/controller/constants/custom_colors.dart';
+import 'package:provider/provider.dart';
 import 'package:safari/controller/constants/device_size.dart';
+import 'package:safari/controller/providers/auth_container_provider.dart';
+import 'package:safari/view/screens/Authentication/aut_container.dart';
+import 'package:safari/view/screens/Authentication/login_container.dart';
+import 'package:safari/view/screens/Authentication/register_container.dart';
 
-class AuthenticationScreen extends StatelessWidget {
+class AuthenticationScreen extends StatefulWidget {
   const AuthenticationScreen({Key? key}) : super(key: key);
 
   @override
+  State<AuthenticationScreen> createState() => _AuthenticationScreenState();
+}
+
+class _AuthenticationScreenState extends State<AuthenticationScreen> {
+  final List<dynamic> auth_containers = [
+    RegisterContainer(),
+    AuthContainer(),
+    LoginContainer()
+  ];
+
+  @override
   Widget build(BuildContext context) {
+    final int authContainerIndex =
+        Provider.of<AuthContainerProvider>(context).getContainerIndex;
     return Scaffold(
         body: Container(
       height: displayHeight(context),
@@ -30,70 +45,13 @@ class AuthenticationScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                height: displayHeight(context) * 0.4,
-                width: displayWidth(context),
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                    color: Colors.black26,
-                    borderRadius: BorderRadius.circular(15)),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text('Safari',
-                        style: TextStyle(
-                            fontSize: 40,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold)),
-                    Text(
-                      'Man cannot discover new oceans unless he has the courage to lose sight of the shore',
-                      style: TextStyle(
-                          color: Colors.white.withOpacity(0.8),
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400),
-                    ),
-                    const SizedBox(
-                      height: 40,
-                    ),
-                    Center(
-                      child: SizedBox(
-                        width: displayWidth(context) * 0.4,
-                        child: MaterialButton(
-                          onPressed: () {},
-                          color: Colors.white,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15)),
-                          child: const Text(
-                            'Login',
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Center(
-                      child: SizedBox(
-                        width: displayWidth(context) * 0.4,
-                        child: MaterialButton(
-                          onPressed: () {},
-                          color: CustomColors.primary,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15)),
-                          child: Text(
-                            'Register',
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
+                  height: displayHeight(context) * 0.4,
+                  width: displayWidth(context),
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                      color: Colors.black26,
+                      borderRadius: BorderRadius.circular(15)),
+                  child: auth_containers[authContainerIndex]),
             ],
           ),
         ),
