@@ -31,6 +31,7 @@ class AuthContainer extends StatelessWidget {
         Center(
           child: SizedBox(
             width: displayWidth(context) * 0.4,
+            height: displayHeight(context) * 0.05,
             child: MaterialButton(
               onPressed: () {
                 Provider.of<AuthContainerProvider>(context, listen: false)
@@ -49,9 +50,13 @@ class AuthContainer extends StatelessWidget {
             ),
           ),
         ),
+        const SizedBox(
+          height: 10,
+        ),
         Center(
           child: SizedBox(
             width: displayWidth(context) * 0.4,
+            height: displayHeight(context) * 0.05,
             child: MaterialButton(
               onPressed: () {
                 Provider.of<AuthContainerProvider>(context, listen: false)
