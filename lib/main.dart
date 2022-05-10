@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:safari/controller/providers/current_screen_provider.dart';
 import 'package:safari/controller/providers/places_provider.dart';
+import 'package:safari/view/screens/Authentication/auth_screen.dart';
 import 'package:safari/view/screens/SplashScreen/splash_screen.dart';
 
 void main() => runApp(const SafariApp());
@@ -22,7 +23,7 @@ class SafariApp extends StatelessWidget {
       ],
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: SplashScreen(),
+        home: AuthenticationScreen(),
       ),
     );
   }
