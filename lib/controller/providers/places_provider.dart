@@ -52,6 +52,11 @@ class PlacesProvider extends ChangeNotifier {
     return [...places];
   }
 
+  PlaceModel getPlaceUsingId(String id) {
+    int index = places.indexWhere((element) => element.id == id);
+    return places[index];
+  }
+
   // setters -> These methods are used to set values
 
   // This method is defined to set places , basically it calls the get api to fetch data from server and store it in the current state
