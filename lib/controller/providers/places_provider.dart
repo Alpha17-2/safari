@@ -63,7 +63,7 @@ class PlacesProvider extends ChangeNotifier {
   Future<dynamic> setPlaces() async {
     List<PlaceModel> tempPlaces = [];
     try {
-      dynamic body = await service(ServiceApi.base_url + 'allplaces.json');
+      dynamic body = await GetService().service(endpoint: 'allplaces.json');
       if (body.runtimeType == String && body.toString() == 'no internet') {
         return 'no internet';
       }
