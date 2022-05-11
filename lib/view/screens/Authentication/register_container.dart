@@ -1,12 +1,24 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:safari/controller/constants/device_size.dart';
+import 'package:safari/controller/firebase_services/auth_services.dart';
 import 'package:safari/controller/providers/auth_container_provider.dart';
 import 'package:safari/view/viewModels/custom_textfield.dart';
 
-class RegisterContainer extends StatelessWidget {
+class RegisterContainer extends StatefulWidget {
+  @override
+  State<RegisterContainer> createState() => _RegisterContainerState();
+}
+
+class _RegisterContainerState extends State<RegisterContainer> {
   TextEditingController emailController = TextEditingController();
+
   TextEditingController passwordController = TextEditingController();
+
+  final Authservice _auth = Authservice(FirebaseAuth.instance);
+
+  bool loadScreen = false;
 
   @override
   Widget build(BuildContext context) {
@@ -56,17 +68,39 @@ class RegisterContainer extends StatelessWidget {
                 width: displayWidth(context) * 0.6,
                 height: displayHeight(context) * 0.06,
                 child: MaterialButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    setState(() {
+                      loadScreen = true;
+                    });
+                    var response = await _auth.signUp(
+                        email: emailController.text,
+                        password: passwordController.text,
+                        context: context);
+                    if (mounted) {
+                      setState(() {
+                        loadScreen = false;
+                      });
+                    }
+
+                    if (response != 'valid') {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text(response.toString())));
+                    }
+                  },
                   color: Colors.white,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15)),
-                  child: const Text(
-                    'Sign up',
-                    style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold),
-                  ),
+                  child: (loadScreen)
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : const Text(
+                          'Sign up',
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold),
+                        ),
                 ),
               ),
             ),
