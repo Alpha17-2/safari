@@ -1,7 +1,7 @@
 class UserModel {
   final String? id;
   String? docId;
-  final String? title;
+  String? title;
   final List<dynamic>? likedPlaces;
   final List<dynamic>? visitedPlaces;
   UserModel(
@@ -15,6 +15,10 @@ class UserModel {
       title: json['title'] ?? 'New User',
       visitedPlaces: json['visitedPlaces'] ?? [],
     );
+  }
+
+  setTitle(String newTitle) {
+    title = newTitle;
   }
 
   setDocId(String newDocId) {

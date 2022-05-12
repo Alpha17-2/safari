@@ -18,7 +18,6 @@ class UpdateService {
              await http.patch(Uri.parse(ServiceApi.base_url + endpoint),
             body: json.encode(body));
         int statusCode = response.statusCode;
-        //print(statusCode);
         switch (statusCode) {
           case 200:
             return json.decode(response.body) as Map<String, dynamic>;
@@ -33,7 +32,6 @@ class UpdateService {
         return 'no internet';
       }
     } on SocketException catch (_) {
-      //print('2. no internet');
       return 'no internet';
     } catch (e) {
       print(e.toString());

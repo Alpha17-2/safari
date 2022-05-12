@@ -40,10 +40,10 @@ class TopTrips extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                      letterSpacing: 0.1,
-                      color: Colors.teal[700],
-                      fontSize: 17,
-                      fontWeight: FontWeight.w600)),
+                    letterSpacing: 0.1,
+                    color: Colors.teal[700],
+                    fontSize: 17,
+                  )),
             ),
             const SizedBox(
               height: 2,

@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:safari/controller/api_services/get_service.dart';
 import 'package:safari/controller/api_services/post_service.dart';
-import 'package:safari/controller/api_services/put_service.dart';
 import 'package:safari/controller/api_services/update_service.dart';
 import 'package:safari/model/user_model.dart';
 
@@ -86,5 +85,20 @@ class UserProvider extends ChangeNotifier {
       }
     }
     notifyListeners();
+  }
+
+  Future<dynamic> setNewTitle({required String title}) async {
+    try {
+      dynamic body = await UpdateService().service(
+          endpoint: 'users/${currentUser!.docId}.json', body: {'title': title});
+      if (body == null) {
+        return 'Some error occured';
+      } else if (body.runtimeType == String) {
+        return body.toString();
+      } else {
+        return 'OK';
+      }
+    } on SocketException {
+    } on TimeoutException {}
   }
 }

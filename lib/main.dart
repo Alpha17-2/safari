@@ -8,7 +8,6 @@ import 'package:safari/controller/providers/current_screen_provider.dart';
 import 'package:safari/controller/providers/firebase_user_provider.dart';
 import 'package:safari/controller/providers/places_provider.dart';
 import 'package:safari/controller/providers/user_provider.dart';
-import 'package:safari/view/screens/AppScreen/app_screen.dart';
 import 'package:safari/view/screens/Authentication/auth_screen.dart';
 import 'package:safari/view/screens/SplashScreen/splash_screen.dart';
 
