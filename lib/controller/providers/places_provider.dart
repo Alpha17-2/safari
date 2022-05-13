@@ -1,19 +1,23 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:safari/controller/api_services/get_service.dart';
-import 'package:safari/controller/constants/service_api_constants.dart';
+import 'package:safari/controller/api_services/update_service.dart';
 import 'package:safari/model/place_model.dart';
 
 class PlacesProvider extends ChangeNotifier {
   List<PlaceModel> places = [];
   bool successFullApiCall = true;
+  bool isSavingStatus = false;
 
   // getters -> These methods are used to get values
 
   bool get getSuccessFullApiCall {
     return successFullApiCall;
+  }
+
+  bool get getIsSavingStatus {
+    return isSavingStatus;
   }
 
   List<PlaceModel> get getBeaches {
@@ -94,5 +98,57 @@ class PlacesProvider extends ChangeNotifier {
       }
     }
     notifyListeners();
+  }
+
+  Future<dynamic> toogleSaveOptionForPlace(
+      {required String placeId, required String myUid}) async {
+    isSavingStatus = true;
+    notifyListeners();
+    try {
+      dynamic getResponse =
+          await GetService().service(endpoint: 'allplaces/${placeId}.json');
+      if (getResponse != null) {
+        if (getResponse.runtimeType == String) {
+          isSavingStatus = false;
+          notifyListeners();
+          return getResponse.toString();
+        } else {
+          PlaceModel tempModel =
+              PlaceModel.fromJson(getResponse as Map<String, dynamic>);
+          List<dynamic> savedBy = tempModel.savedBy;
+          savedBy.contains(myUid) ? savedBy.remove(myUid) : savedBy.add(myUid);
+          dynamic updateResponse = UpdateService().service(
+              endpoint: 'allplaces/$placeId.json', body: {'savedBy': savedBy});
+          if (updateResponse.runtimeType != String) {
+            int getIndexOfPlace =
+                places.indexWhere((element) => element.id == placeId);
+            places[getIndexOfPlace].toogleSaveStatus(myUid);
+            isSavingStatus = false;
+            notifyListeners();
+            return 'OK';
+          } else {
+            isSavingStatus = false;
+            notifyListeners();
+            return updateResponse.toString();
+          }
+        }
+      } else {
+        isSavingStatus = false;
+        notifyListeners();
+        return 'Some error occured';
+      }
+    } on SocketException {
+      isSavingStatus = false;
+      notifyListeners();
+    } on TimeoutException {
+      isSavingStatus = false;
+      notifyListeners();
+    } catch (e) {
+      if (kDebugMode) {
+        isSavingStatus = false;
+        notifyListeners();
+        print(e.toString());
+      }
+    }
   }
 }

@@ -25,14 +25,14 @@ class SafariApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-            create: (context) => AuthNotifier(),
-          ),
-          Provider<Authservice>(
-              create: (_) => Authservice(FirebaseAuth.instance)),
-          StreamProvider(
-            create: (context) => context.read<Authservice>().austhStateChanges,
-            initialData: null,
-          ),
+          create: (context) => AuthNotifier(),
+        ),
+        Provider<Authservice>(
+            create: (_) => Authservice(FirebaseAuth.instance)),
+        StreamProvider(
+          create: (context) => context.read<Authservice>().austhStateChanges,
+          initialData: null,
+        ),
         ChangeNotifierProvider(
           create: (context) => AuthContainerProvider(),
         ),
@@ -42,22 +42,26 @@ class SafariApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => PlacesProvider(),
         ),
-        ChangeNotifierProvider(create: (context) => UserProvider(),)
+        ChangeNotifierProvider(
+          create: (context) => UserProvider(),
+        )
       ],
-      child:  MaterialApp(
+      child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home:  Consumer<AuthNotifier>(
-              builder: (context, notifier, child) {
-                return notifier.user != null ? const SplashScreen() : const Wrapper();
-              },
-            ),
+        home: Consumer<AuthNotifier>(
+          builder: (context, notifier, child) {
+            return notifier.user != null
+                ? const SplashScreen()
+                : const Wrapper();
+          },
+        ),
       ),
     );
   }
 }
 
 class Wrapper extends StatelessWidget {
-  const Wrapper({ Key? key }) : super(key: key);
+  const Wrapper({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
