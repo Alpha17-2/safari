@@ -8,6 +8,7 @@ import 'package:safari/controller/providers/current_screen_provider.dart';
 import 'package:safari/controller/providers/firebase_user_provider.dart';
 import 'package:safari/controller/providers/places_provider.dart';
 import 'package:safari/controller/providers/user_provider.dart';
+import 'package:safari/controller/providers/visited_places_provider.dart';
 import 'package:safari/view/screens/Authentication/auth_screen.dart';
 import 'package:safari/view/screens/SplashScreen/splash_screen.dart';
 
@@ -32,6 +33,9 @@ class SafariApp extends StatelessWidget {
         StreamProvider(
           create: (context) => context.read<Authservice>().austhStateChanges,
           initialData: null,
+        ),
+        ChangeNotifierProvider(
+          create: (context) => VisitedPlacesProvider(),
         ),
         ChangeNotifierProvider(
           create: (context) => AuthContainerProvider(),

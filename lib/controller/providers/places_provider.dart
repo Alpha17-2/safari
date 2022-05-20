@@ -8,7 +8,7 @@ import 'package:safari/model/place_model.dart';
 class PlacesProvider extends ChangeNotifier {
   List<PlaceModel> places = [];
   bool successFullApiCall = true;
-  bool isSavingStatus = false;
+  bool isLikingStatus = false;
 
   // getters -> These methods are used to get values
 
@@ -17,7 +17,11 @@ class PlacesProvider extends ChangeNotifier {
   }
 
   bool get getIsSavingStatus {
-    return isSavingStatus;
+    return isLikingStatus;
+  }
+
+  List<PlaceModel> getLikedPlaces(String myUId){
+    return [...places.where((element) => element.likedBy.contains(myUId)).toList()];
   }
 
   List<PlaceModel> get getBeaches {
@@ -100,52 +104,52 @@ class PlacesProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<dynamic> toogleSaveOptionForPlace(
+  Future<dynamic> toggleLikeOptionForPlace(
       {required String placeId, required String myUid}) async {
-    isSavingStatus = true;
+    isLikingStatus = true;
     notifyListeners();
     try {
       dynamic getResponse =
           await GetService().service(endpoint: 'allplaces/${placeId}.json');
       if (getResponse != null) {
         if (getResponse.runtimeType == String) {
-          isSavingStatus = false;
+          isLikingStatus = false;
           notifyListeners();
           return getResponse.toString();
         } else {
           PlaceModel tempModel =
               PlaceModel.fromJson(getResponse as Map<String, dynamic>);
-          List<dynamic> savedBy = tempModel.savedBy;
-          savedBy.contains(myUid) ? savedBy.remove(myUid) : savedBy.add(myUid);
+          List<dynamic> likedBy = tempModel.likedBy;
+          likedBy.contains(myUid) ? likedBy.remove(myUid) : likedBy.add(myUid);
           dynamic updateResponse = UpdateService().service(
-              endpoint: 'allplaces/$placeId.json', body: {'savedBy': savedBy});
+              endpoint: 'allplaces/$placeId.json', body: {'likedBy': likedBy});
           if (updateResponse.runtimeType != String) {
             int getIndexOfPlace =
                 places.indexWhere((element) => element.id == placeId);
-            places[getIndexOfPlace].toogleSaveStatus(myUid);
-            isSavingStatus = false;
+            places[getIndexOfPlace].toggleLikeStatus(myUid);
+            isLikingStatus = false;
             notifyListeners();
             return 'OK';
           } else {
-            isSavingStatus = false;
+            isLikingStatus = false;
             notifyListeners();
             return updateResponse.toString();
           }
         }
       } else {
-        isSavingStatus = false;
+        isLikingStatus = false;
         notifyListeners();
-        return 'Some error occured';
+        return 'Some error occurred';
       }
     } on SocketException {
-      isSavingStatus = false;
+      isLikingStatus = false;
       notifyListeners();
     } on TimeoutException {
-      isSavingStatus = false;
+      isLikingStatus = false;
       notifyListeners();
     } catch (e) {
       if (kDebugMode) {
-        isSavingStatus = false;
+        isLikingStatus = false;
         notifyListeners();
         print(e.toString());
       }

@@ -76,13 +76,13 @@ class ImagePreview extends StatelessWidget {
                     child: LikeButton(
                   circleColor:
                       const CircleColor(start: Colors.red, end: Colors.white),
-                  isLiked: (place.savedBy.contains(myUid)),
+                  isLiked: (place.likedBy.contains(myUid)),
                   onTap: (data) async {
                     if (!loadIconStatus) {
                       dynamic response = await Provider.of<PlacesProvider>(
                               context,
                               listen: false)
-                          .toogleSaveOptionForPlace(
+                          .toggleLikeOptionForPlace(
                               placeId: placeId!, myUid: myUid!);
                       if (response.toString() != 'OK') {
                         ScaffoldMessenger.of(context).showSnackBar(
