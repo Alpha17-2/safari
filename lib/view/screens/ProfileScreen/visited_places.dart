@@ -100,7 +100,6 @@ class VisitedPlaces extends StatelessWidget {
     final List<VisitedPlaceModel> visitedPlaces =
         Provider.of<VisitedPlacesProvider>(context).getVisitedPlaces;
     return ListView.builder(
-
       padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
       itemCount: visitedPlaces.length,
       itemBuilder: (context, index) {

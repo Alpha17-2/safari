@@ -1,7 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:safari/controller/firebase_services/upload_image.dart';
 import 'package:safari/model/visited_place_model.dart';
 
 class VisitedPlacesProvider extends ChangeNotifier {
+  final List<XFile> pickedImages = [];
+
   final List<VisitedPlaceModel> visitedPlaces = [
     VisitedPlaceModel(
         description:
@@ -36,4 +42,54 @@ class VisitedPlacesProvider extends ChangeNotifier {
 
   // getters
   List<VisitedPlaceModel> get getVisitedPlaces => [...visitedPlaces];
+  List<XFile> get getPickedImages => [...pickedImages];
+
+  // setters
+  void setPickedImages(List<XFile> pickedList) {
+    pickedImages.addAll(pickedList);
+    notifyListeners();
+  }
+
+  void removeThisImage(int index) {
+    pickedImages.removeAt(index);
+    notifyListeners();
+  }
+
+  void clearPickedImages() {
+    pickedImages.clear();
+    notifyListeners();
+  }
+
+  Future<dynamic> addVisitedPlace(
+      {required String title,
+      required String myUid,
+      required String location,
+      required DateTime dateTime,
+      required String description}) async {
+    List<dynamic> images = await getImageUrls(
+        title: title,
+        myUid: myUid,
+        location: location,
+        dateTime: dateTime,
+        description: description);
+    debugPrint(images.toString());
+  }
+
+  Future<List<dynamic>> getImageUrls(
+      {required String title,
+      required String myUid,
+      required String location,
+      required DateTime dateTime,
+      required String description}) async {
+    List<dynamic> images = [];
+    int counterIndex = 0;
+    for (XFile file in pickedImages) {
+      String dowmloadLink = await UploadImage(
+              file: File(file.path),
+              imageLoaction: 'visitedPlaces/$myUid/$title/${counterIndex++}')
+          .service();
+      images.add(dowmloadLink);
+    }
+    return images;
+  }
 }

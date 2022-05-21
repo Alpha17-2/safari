@@ -55,12 +55,16 @@ class _LoginContainerState extends State<LoginContainer> {
                 obscureText: false,
                 label: "Email address",
                 maxlines: 1,
+                borderColor: Colors.white,
+                textColor: Colors.white,
                 controller: emailController),
             const SizedBox(height: 15),
             CustomTextField(
                 obscureText: true,
                 label: "Password",
                 maxlines: 1,
+                borderColor: Colors.white,
+                textColor: Colors.white,
                 controller: passwordController),
             const SizedBox(height: 20),
             Center(

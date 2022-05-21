@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:safari/controller/constants/custom_colors.dart';
 import 'package:safari/controller/constants/device_size.dart';
 import 'package:safari/controller/firebase_services/auth_services.dart';
 import 'package:safari/controller/providers/places_provider.dart';
@@ -9,8 +8,8 @@ import 'package:safari/controller/providers/user_provider.dart';
 import 'package:safari/controller/providers/visited_places_provider.dart';
 import 'package:safari/model/user_model.dart';
 import 'package:safari/model/visited_place_model.dart';
-import 'package:safari/view/screens/Authentication/auth_screen.dart';
 import 'package:safari/view/screens/ProfileScreen/editName.dart';
+import 'package:safari/view/screens/ProfileScreen/new_visited_place.dart';
 import 'package:safari/view/screens/ProfileScreen/visited_places.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -56,11 +55,11 @@ class ProfileScreen extends StatelessWidget {
                       style: const TextStyle(
                           fontWeight: FontWeight.w500,
                           color: Colors.black87,
-                          fontSize: 18,
+                          fontSize: 16,
                           letterSpacing: 0.05),
                     ),
                     IconButton(
-                        iconSize: 20,
+                        iconSize: 18,
                         onPressed: () {
                           showDialog(
                               context: context,
@@ -73,6 +72,35 @@ class ProfileScreen extends StatelessWidget {
                           color: Colors.teal,
                         ))
                   ],
+                ),
+                const SizedBox(
+                  width: 50,
+                ),
+                Expanded(
+                  child: IconButton(
+                    onPressed: () {
+                      showModalBottomSheet(
+                          backgroundColor: Colors.white,
+                          isScrollControlled: true,
+                          constraints: BoxConstraints.loose(Size(
+                              MediaQuery.of(context).size.width,
+                              MediaQuery.of(context).size.height * 0.75)),
+                          shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(15),
+                                  topRight: Radius.circular(15))),
+                          context: context,
+                          builder: (context) {
+                            return Padding(
+                              padding: EdgeInsets.only(
+                                  top: MediaQuery.of(context).padding.top),
+                              child: NewVisitedPlace(),
+                            );
+                          });
+                    },
+                    icon: const Icon(Icons.add),
+                    color: Colors.red,
+                  ),
                 ),
               ],
             ),
@@ -140,10 +168,7 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(
-            height: 5,
-          ),
-          //VisitedPlaces(),
+          const SizedBox(height: 5),
           Expanded(child: VisitedPlaces()),
         ],
       ),
@@ -159,26 +184,4 @@ class ProfileScreen extends StatelessWidget {
 //                   ));
 //             });
 
-//  Container(
-//       height: displayHeight(context),
-//       width: displayWidth(context),
-//       color: Colors.white,
-//       //padding: EdgeInsets.all(16),
-//       child: Column(
-//         mainAxisAlignment: MainAxisAlignment.start,
-//         crossAxisAlignment: CrossAxisAlignment.start,
-//         children: [
-//           Image.asset(
-//             'assets/images/profile_cover.jpg',
-//             height: displayHeight(context) * 0.25,
-//             fit: BoxFit.cover,
-//             width: displayWidth(context),
-//           ),
-//           const Text(
-//             'Profile',
-//             style: TextStyle(
-//                 color: Colors.teal, fontSize: 20, fontWeight: FontWeight.w500),
-//           )
-//         ],
-//       ),
-//     );
+
