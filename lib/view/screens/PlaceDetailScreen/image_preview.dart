@@ -78,6 +78,7 @@ class ImagePreview extends StatelessWidget {
                       const CircleColor(start: Colors.red, end: Colors.white),
                   isLiked: (place.likedBy.contains(myUid)),
                   onTap: (data) async {
+
                     if (!loadIconStatus) {
                       dynamic response = await Provider.of<PlacesProvider>(
                               context,

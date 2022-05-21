@@ -8,6 +8,8 @@ import 'package:safari/view/screens/HomeScreen/home_screen.dart';
 import 'package:safari/view/screens/LikedPlacesScreen/liked_places_screen.dart';
 import 'package:safari/view/screens/ProfileScreen/profile_screen.dart';
 import 'package:safari/view/screens/SearchScreen/search_screen.dart';
+import '../../../controller/constants/custom_colors.dart';
+import '../../viewModels/navbarIcon.dart';
 import 'navigation_bar.dart';
 
 class AppScreen extends StatefulWidget {
@@ -36,7 +38,6 @@ class _AppScreenState extends State<AppScreen> {
       Provider.of<UserProvider>(context).setUser(uid);
       callInit = false;
     }
-
     super.didChangeDependencies();
   }
 
@@ -51,6 +52,7 @@ class _AppScreenState extends State<AppScreen> {
         appBar: AppBar(
           toolbarHeight: 0,
         ),
+
         backgroundColor: Colors.white,
         body: Stack(
           alignment: Alignment.center,

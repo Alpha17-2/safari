@@ -46,7 +46,7 @@ class VisitedPlaces extends StatelessWidget {
                   style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.black87,
-                      fontSize: 14),
+                      fontSize: 15),
                 ),
                 const SizedBox(
                   height: 8,
@@ -58,10 +58,10 @@ class VisitedPlaces extends StatelessWidget {
                   style: const TextStyle(
                       //fontWeight: FontWeight.bold,
                       color: Colors.black54,
-                      fontSize: 12),
+                      fontSize: 12.5),
                 ),
                 const SizedBox(
-                  height: 8,
+                  height: 15,
                 ),
                 Text(
                   '${visitedPlaceModel.location}, ${visitedPlaceModel.dateTime.day} ${months[visitedPlaceModel.dateTime.month]} ${visitedPlaceModel.dateTime.year}',
@@ -100,6 +100,7 @@ class VisitedPlaces extends StatelessWidget {
     final List<VisitedPlaceModel> visitedPlaces =
         Provider.of<VisitedPlacesProvider>(context).getVisitedPlaces;
     return ListView.builder(
+
       padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
       itemCount: visitedPlaces.length,
       itemBuilder: (context, index) {

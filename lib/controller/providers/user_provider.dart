@@ -24,8 +24,8 @@ class UserProvider extends ChangeNotifier {
 
   Future<dynamic> registerNewUser(Map<String, dynamic> userData) async {
     try {
-      dynamic body =
-          await PutService().service(endpoint: 'users/${userData['id']}.json', body: userData);
+      dynamic body = await PutService()
+          .service(endpoint: 'users/${userData['id']}.json', body: userData);
       if (body.runtimeType == String && body.toString() == 'no internet') {
         return 'no internet';
       } else if (body == null) {
@@ -96,6 +96,8 @@ class UserProvider extends ChangeNotifier {
       } else if (body.runtimeType == String) {
         return body.toString();
       } else {
+        currentUser!.setTitle(title);
+        notifyListeners();
         return 'OK';
       }
     } on SocketException {
