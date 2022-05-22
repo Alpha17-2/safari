@@ -35,6 +35,7 @@ android/app/google-services.json
 # Web related
 lib/generated_plugin_registrant.dart
 lib/controller/constants/service_api_constants.dart
+windows/flutter/
 
 # Symbolication related
 app.*.symbols
