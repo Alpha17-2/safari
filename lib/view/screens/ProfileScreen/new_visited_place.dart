@@ -57,110 +57,119 @@ class _NewVisitedPlaceState extends State<NewVisitedPlace> {
 
   @override
   Widget build(BuildContext context) {
+    bool isPosting = Provider.of<VisitedPlacesProvider>(context).getIsPosting;
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(14.0),
-        child: Form(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Add New Visited Place',
-                      style: TextStyle(
-                          color: Colors.black87.withOpacity(0.75),
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600),
-                    ),
-                    TextButton.icon(
-                        onPressed: () {
-                          Provider.of<VisitedPlacesProvider>(context,
-                                  listen: false)
-                              .addVisitedPlace(
-                                  title: titleCtr.text,
-                                  myUid: myUid,
-                                  location: locationCtr.text,
-                                  dateTime: currentDate,
-                                  description: descriptionCtr.text);
+        child: (isPosting)
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : Form(
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Add New Visited Place',
+                            style: TextStyle(
+                                color: Colors.black87.withOpacity(0.75),
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600),
+                          ),
+                          TextButton.icon(
+                              onPressed: () async {
+                                dynamic response =
+                                    await Provider.of<VisitedPlacesProvider>(
+                                            context,
+                                            listen: false)
+                                        .addVisitedPlace(
+                                            title: titleCtr.text,
+                                            myUid: myUid,
+                                            location: locationCtr.text,
+                                            dateTime: currentDate,
+                                            description: descriptionCtr.text);
+                                debugPrint(response);
+                              },
+                              icon: const Icon(Icons.save),
+                              label: const Text('Save'))
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 25,
+                      ),
+                      CustomTextField(
+                        controller: titleCtr,
+                        label: 'Title',
+                        maxlines: 1,
+                        borderColor: Colors.black,
+                        obscureText: false,
+                        textColor: Colors.black,
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      CustomTextField(
+                        controller: descriptionCtr,
+                        label: 'Description',
+                        maxlines: 3,
+                        borderColor: Colors.black,
+                        obscureText: false,
+                        textColor: Colors.black,
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      CustomTextField(
+                        controller: locationCtr,
+                        label: 'Location',
+                        maxlines: 1,
+                        borderColor: Colors.black,
+                        obscureText: false,
+                        textColor: Colors.black,
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      TextFormField(
+                        onTap: () async {
+                          _selectDate(context);
                         },
-                        icon: const Icon(Icons.save),
-                        label: const Text('Save'))
-                  ],
-                ),
-                const SizedBox(
-                  height: 25,
-                ),
-                CustomTextField(
-                  controller: titleCtr,
-                  label: 'Title',
-                  maxlines: 1,
-                  borderColor: Colors.black,
-                  obscureText: false,
-                  textColor: Colors.black,
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                CustomTextField(
-                  controller: descriptionCtr,
-                  label: 'Description',
-                  maxlines: 3,
-                  borderColor: Colors.black,
-                  obscureText: false,
-                  textColor: Colors.black,
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                CustomTextField(
-                  controller: locationCtr,
-                  label: 'Location',
-                  maxlines: 1,
-                  borderColor: Colors.black,
-                  obscureText: false,
-                  textColor: Colors.black,
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                TextFormField(
-                  onTap: () async {
-                    _selectDate(context);
-                  },
-                  readOnly: true,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Field cannot be empty';
-                    }
-                    return null;
-                  },
-                  controller: dateCtr,
-                  decoration: InputDecoration(
-                    focusColor: Colors.black,
-                    labelText: "Date",
-                    labelStyle: const TextStyle(color: Colors.black),
-                    fillColor: Colors.black,
-                    enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: const BorderSide(color: Colors.black)),
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide:
-                            const BorderSide(color: Colors.black, width: 1)),
+                        readOnly: true,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Field cannot be empty';
+                          }
+                          return null;
+                        },
+                        controller: dateCtr,
+                        decoration: InputDecoration(
+                          focusColor: Colors.black,
+                          labelText: "Date",
+                          labelStyle: const TextStyle(color: Colors.black),
+                          fillColor: Colors.black,
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20),
+                              borderSide:
+                                  const BorderSide(color: Colors.black)),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20),
+                              borderSide: const BorderSide(
+                                  color: Colors.black, width: 1)),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      PickedImages(),
+                    ],
                   ),
                 ),
-                const SizedBox(
-                  height: 15,
-                ),
-                PickedImages(),
-              ],
-            ),
-          ),
-        ),
+              ),
       ),
     );
   }

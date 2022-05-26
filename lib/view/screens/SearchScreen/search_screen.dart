@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:safari/controller/constants/device_size.dart';
-import 'package:safari/view/viewModels/custom_textfield.dart';
+import 'package:safari/model/place_model.dart';
 
 class SearchScreen extends StatelessWidget {
   //const SearchScreen({Key? key}) : super(key: key);
@@ -9,11 +9,11 @@ class SearchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: displayHeight(context),
       width: displayWidth(context),
       child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-        Container(
+        SizedBox(
           height: displayHeight(context) * 0.15,
           width: displayWidth(context),
           //color: Colors.black26,
@@ -38,7 +38,10 @@ class SearchScreen extends StatelessWidget {
                   )),
             ),
           ),
-        )
+        ),
+        // ListView.builder(
+        //   itemBuilder: (context, index) {},
+        // )
       ]),
     );
   }
