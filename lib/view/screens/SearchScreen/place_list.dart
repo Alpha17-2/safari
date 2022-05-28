@@ -1,12 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:safari/controller/constants/device_size.dart';
 import 'package:safari/controller/providers/places_provider.dart';
 import 'package:safari/controller/providers/search_screen_provider.dart';
 import 'package:safari/model/place_model.dart';
+import 'package:safari/view/viewModels/favourite_place.dart';
 
 class PlaceList extends StatelessWidget {
-  const PlaceList({Key? key}) : super(key: key);
+  final String myUid = FirebaseAuth.instance.currentUser!.uid;
 
   placeUI(BuildContext context, PlaceModel place) {
     return Padding(
@@ -36,6 +38,19 @@ class PlaceList extends StatelessWidget {
                 ),
               ),
               Positioned(
+                  top: displayHeight(context) * 0.02,
+                  right: displayWidth(context) * 0.06,
+                  child: SizedBox(
+                    height: 50,
+                    width: 50,
+                    child: Card(
+                      color: Colors.white,
+                      child: IsFavouritePlace(placeId: place.id, myUid: myUid),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12)),
+                    ),
+                  )),
+              Positioned(
                   bottom: displayWidth(context) * 0.05,
                   child: Container(
                       padding: const EdgeInsets.only(
@@ -57,7 +72,7 @@ class PlaceList extends StatelessWidget {
                                 fontWeight: FontWeight.w400,
                                 fontSize: 16),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 2,
                           ),
                           Row(

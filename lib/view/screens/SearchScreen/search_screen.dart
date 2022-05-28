@@ -79,7 +79,7 @@ class SearchScreen extends StatelessWidget {
             itemCount: categories.length,
           ),
         ),
-        const Expanded(child: PlaceList())
+         Expanded(child: PlaceList())
       ]),
     );
   }
