@@ -24,7 +24,7 @@ class IsFavouritePlace extends StatelessWidget {
         if (!loadIconStatus) {
           dynamic response =
               await Provider.of<PlacesProvider>(context, listen: false)
-                  .toggleLikeOptionForPlace(placeId: placeId, myUid: myUid!);
+                  .toggleLikeOptionForPlace(placeId: placeId, myUid: myUid);
           if (response.toString() != 'OK') {
             ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text(response.toString())));

@@ -20,6 +20,17 @@ class PlacesProvider extends ChangeNotifier {
     return isLikingStatus;
   }
 
+  List<PlaceModel> getPlacesFromQuery(String query) {
+    return [
+      ...places
+          .where((element) => (element.title
+                  .toLowerCase()
+                  .startsWith(query.toLowerCase()) ||
+              element.location.toLowerCase().startsWith(query.toLowerCase())))
+          .toList()
+    ];
+  }
+
   List<PlaceModel> getLikedPlaces(String myUId) {
     return [
       ...places.where((element) => element.likedBy.contains(myUId)).toList()
