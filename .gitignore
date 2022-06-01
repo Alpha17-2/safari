@@ -31,11 +31,14 @@
 .pub/
 /build/
 android/app/google-services.json
+/windows/flutter/generated_plugin_registrant
+windows/flutter/generated_plugin_registrant
 
 # Web related
 lib/generated_plugin_registrant.dart
 lib/controller/constants/service_api_constants.dart
-windows/flutter/
+/windows/flutter/generated_plugin_registrant
+windows/flutter/generated_plugin_registrant
 
 # Symbolication related
 app.*.symbols

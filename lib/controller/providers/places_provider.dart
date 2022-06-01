@@ -20,40 +20,29 @@ class PlacesProvider extends ChangeNotifier {
     return isLikingStatus;
   }
 
-  List<PlaceModel> getLikedPlaces(String myUId){
-    return [...places.where((element) => element.likedBy.contains(myUId)).toList()];
+  List<PlaceModel> getPlacesFromQuery(String query) {
+    return [
+      ...places
+          .where((element) => (element.title
+                  .toLowerCase()
+                  .startsWith(query.toLowerCase()) ||
+              element.location.toLowerCase().startsWith(query.toLowerCase())))
+          .toList()
+    ];
   }
 
-  List<PlaceModel> get getBeaches {
-    return [...places.where((place) => place.type == 'Beach')];
+  List<PlaceModel> getLikedPlaces(String myUId) {
+    return [
+      ...places.where((element) => element.likedBy.contains(myUId)).toList()
+    ];
   }
 
-  List<PlaceModel> get getParks {
-    return [...places.where((place) => place.type == 'Park')];
-  }
-
-  List<PlaceModel> get getMonuments {
-    return [...places.where((place) => place.type == 'Monument')];
-  }
-
-  List<PlaceModel> get getMuseums {
-    return [...places.where((place) => place.type == 'Museum')];
-  }
-
-  List<PlaceModel> get getLibraries {
-    return [...places.where((place) => place.type == 'Library')];
-  }
-
-  List<PlaceModel> get getAquariums {
-    return [...places.where((place) => place.type == 'Aquarium')];
-  }
-
-  List<PlaceModel> get getLakes {
-    return [...places.where((place) => place.type == 'Lake')];
+  List<PlaceModel> getPlaceType(String type) {
+    return [...places.where((place) => place.type == type).toList()];
   }
 
   List<PlaceModel> get getTopTrips {
-    return [...places.where((place) => place.topTrip)];
+    return [...places.where((element) => element.topTrip).toList()];
   }
 
   List<PlaceModel> get getAllPlaces {

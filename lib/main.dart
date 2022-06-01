@@ -10,6 +10,7 @@ import 'package:safari/controller/providers/places_provider.dart';
 import 'package:safari/controller/providers/user_provider.dart';
 import 'package:safari/controller/providers/visited_places_provider.dart';
 import 'package:safari/view/screens/Authentication/auth_screen.dart';
+import 'package:safari/controller/providers/search_screen_provider.dart';
 import 'package:safari/view/screens/SplashScreen/splash_screen.dart';
 
 Future<void> main() async {
@@ -34,6 +35,7 @@ class SafariApp extends StatelessWidget {
           create: (context) => context.read<Authservice>().austhStateChanges,
           initialData: null,
         ),
+        ChangeNotifierProvider(create: (context) => SearchScreenProvider(),),
         ChangeNotifierProvider(
           create: (context) => VisitedPlacesProvider(),
         ),
