@@ -35,7 +35,7 @@ class _LoginContainerState extends State<LoginContainer> {
                 const Text(
                   'Login',
                   style: TextStyle(
-                      fontSize: 40,
+                      fontSize: 25,
                       color: Colors.white,
                       fontWeight: FontWeight.bold),
                 ),
@@ -44,28 +44,34 @@ class _LoginContainerState extends State<LoginContainer> {
                     Provider.of<AuthContainerProvider>(context, listen: false)
                         .setContainerIndexTo(newIndex: 1);
                   },
-                  iconSize: 30,
+                  iconSize: 25,
                   icon: const Icon(Icons.arrow_back),
                   color: Colors.white,
                 )
               ],
             ),
-            const SizedBox(height: 15),
-            CustomTextField(
-                obscureText: false,
-                label: "Email address",
-                maxlines: 1,
-                borderColor: Colors.white,
-                textColor: Colors.white,
-                controller: emailController),
-            const SizedBox(height: 15),
-            CustomTextField(
-                obscureText: true,
-                label: "Password",
-                maxlines: 1,
-                borderColor: Colors.white,
-                textColor: Colors.white,
-                controller: passwordController),
+            const SizedBox(height: 10),
+            SizedBox(
+              height: displayHeight(context) * 0.07,
+              child: CustomTextField(
+                  obscureText: false,
+                  label: "Email address",
+                  maxlines: 1,
+                  borderColor: Colors.white,
+                  textColor: Colors.white,
+                  controller: emailController),
+            ),
+            const SizedBox(height: 12),
+            SizedBox(
+              height: displayHeight(context) * 0.07,
+              child: CustomTextField(
+                  obscureText: true,
+                  label: "Password",
+                  maxlines: 1,
+                  borderColor: Colors.white,
+                  textColor: Colors.white,
+                  controller: passwordController),
+            ),
             const SizedBox(height: 20),
             Center(
               child: SizedBox(
