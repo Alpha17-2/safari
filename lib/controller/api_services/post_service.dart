@@ -12,30 +12,35 @@ class PostService {
       String? taskMessage,
       bool? dislayMessage}) async {
     try {
+      debugPrint('post body = ${body.toString()}');
       var response = await http.post(Uri.parse(ServiceApi.base_url + endpoint!),
           body: json.encode(body));
       int statusCode = response.statusCode;
       switch (statusCode) {
         case 200:
+          debugPrint('post successfull');
+          if (response.body.isNotEmpty) {
+            debugPrint(response.body.toString());
+          }
           if (dislayMessage!) {
             ScaffoldMessenger.of(GlobalContext.contextKey.currentContext!)
                 .showSnackBar(SnackBar(content: Text(taskMessage!)));
           }
-
+          debugPrint('post response : ${response.body.toString()}');
           return json.decode(response.body);
         case 400:
           ScaffoldMessenger.of(GlobalContext.contextKey.currentContext!)
               .showSnackBar(const SnackBar(content: Text('Bad request')));
-          return statusCode;
+          return null;
         case 401:
           ScaffoldMessenger.of(GlobalContext.contextKey.currentContext!)
               .showSnackBar(const SnackBar(content: Text('Unauthorised')));
-          return statusCode;
+          return null;
         default:
           ScaffoldMessenger.of(GlobalContext.contextKey.currentContext!)
               .showSnackBar(const SnackBar(
                   content: Text('Network connectivity problem')));
-          return statusCode;
+          return null;
       }
     } catch (e) {
       if (kDebugMode) {

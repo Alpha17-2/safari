@@ -22,6 +22,7 @@ class UpdateService {
 
       if (internetResponse.isNotEmpty &&
           internetResponse[0].rawAddress.isNotEmpty) {
+        debugPrint('update body : ${body.toString()}');
         var response = await http.patch(
             Uri.parse(ServiceApi.base_url + endpoint),
             body: json.encode(body));
@@ -34,17 +35,26 @@ class UpdateService {
             }
             return json.decode(response.body) as Map<String, dynamic>;
           case 400:
-            return 'Bad request';
+            ScaffoldMessenger.of(GlobalContext.contextKey.currentContext!)
+                .showSnackBar(
+                    const SnackBar(content: Text('Some error occurred')));
+            return null;
           case 401:
-            return 'Unauthorised';
+            ScaffoldMessenger.of(GlobalContext.contextKey.currentContext!)
+                .showSnackBar(
+                    const SnackBar(content: Text('Some error occurred')));
+            return null;
           default:
-            break;
+            ScaffoldMessenger.of(GlobalContext.contextKey.currentContext!)
+                .showSnackBar(
+                    const SnackBar(content: Text('Some error occurred')));
+            return null;
         }
       } else {
-        return 'no internet';
+        return null;
       }
     } on SocketException catch (_) {
-      return 'no internet';
+      return null;
     } catch (e) {
       print(e.toString());
     }

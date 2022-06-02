@@ -62,8 +62,16 @@ class _NewVisitedPlaceState extends State<NewVisitedPlace> {
       body: Padding(
         padding: const EdgeInsets.all(14.0),
         child: (isPosting)
-            ? const Center(
-                child: CircularProgressIndicator(),
+            ? Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: const [
+                  CircularProgressIndicator(),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text('Adding new place')
+                ],
               )
             : Form(
                 child: SingleChildScrollView(
@@ -83,17 +91,16 @@ class _NewVisitedPlaceState extends State<NewVisitedPlace> {
                           ),
                           TextButton.icon(
                               onPressed: () async {
-                                dynamic response =
-                                    await Provider.of<VisitedPlacesProvider>(
-                                            context,
-                                            listen: false)
-                                        .addVisitedPlace(
-                                            title: titleCtr.text,
-                                            myUid: myUid,
-                                            location: locationCtr.text,
-                                            dateTime: currentDate,
-                                            description: descriptionCtr.text);
-                                debugPrint(response);
+                                await Provider.of<VisitedPlacesProvider>(
+                                        context,
+                                        listen: false)
+                                    .addVisitedPlace(
+                                        title: titleCtr.text,
+                                        myUid: myUid,
+                                        location: locationCtr.text,
+                                        dateTime: currentDate,
+                                        description: descriptionCtr.text);
+                                Navigator.pop(context);
                               },
                               icon: const Icon(Icons.save),
                               label: const Text('Save'))

@@ -43,26 +43,29 @@ class ShowPlace extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  visitedPlaceModel.title,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 2,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87,
-                      fontSize: 15),
+                Container(
+                  child: Text(
+                    visitedPlaceModel.title,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
+                        fontSize: 15),
+                  ),
                 ),
                 const SizedBox(
                   height: 8,
                 ),
-                Text(
-                  visitedPlaceModel.description,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 6,
-                  style: const TextStyle(
-                      //fontWeight: FontWeight.bold,
-                      color: Colors.black54,
-                      fontSize: 12.5),
+                SizedBox(
+                  height: displayHeight(context) * 0.15,
+                  child: Text(
+                    visitedPlaceModel.description,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 7,
+                    style:
+                        const TextStyle(color: Colors.black54, fontSize: 12.5),
+                  ),
                 ),
                 const SizedBox(
                   height: 15,

@@ -1,12 +1,10 @@
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:safari/controller/api_services/post_service.dart';
 import 'package:safari/controller/api_services/update_service.dart';
 import 'package:safari/controller/firebase_services/upload_image.dart';
 import 'package:safari/model/visited_place_model.dart';
-import 'package:safari/view/screens/ProfileScreen/visited_places.dart';
 
 class VisitedPlacesProvider extends ChangeNotifier {
   bool isPosting = false;
@@ -26,17 +24,17 @@ class VisitedPlacesProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void removeThisImage(int index) {
-    pickedImages.removeAt(index);
-    notifyListeners();
-  }
-
   void clearPickedImages() {
     pickedImages.clear();
     notifyListeners();
   }
 
-  Future<dynamic> addVisitedPlace(
+  void removeThisImage(int index) {
+    pickedImages.removeAt(index);
+    notifyListeners();
+  }
+
+  Future<void> addVisitedPlace(
       {required String title,
       required String myUid,
       required String location,
@@ -53,47 +51,48 @@ class VisitedPlacesProvider extends ChangeNotifier {
     debugPrint(images.toString());
 
     try {
-      dynamic postResponse =
-          await PostService().service(endpoint: 'visited/${myUid}.json', body: {
-        'title': title,
-        'myUid': myUid,
-        'location': location,
-        'dateTime': dateTime.toString(),
-        'description': description,
-        'images': images,
-      });
+      dynamic postResponse = await PostService().service(
+          endpoint: 'visited/${myUid}.json',
+          dislayMessage: false,
+          taskMessage: '',
+          body: {
+            'title': title,
+            'myUid': myUid,
+            'location': location,
+            'dateTime': dateTime.toString(),
+            'description': description,
+            'images': images,
+          });
+
       if (postResponse != null) {
-        if (postResponse.runtimeType == String) {
-          return postResponse.toString();
+        
+        dynamic updateResponse = await UpdateService().service(
+            showMessage: true,
+            taskMessage: 'New place added',
+            endpoint: 'visited/${myUid}/${postResponse['name']}.json',
+            body: {'id': postResponse['name']});
+        if (updateResponse != null) {
+          isPosting = false;
+          visitedPlaces.add(VisitedPlaceModel(
+              description: description,
+              id: postResponse['name'],
+              dateTime: dateTime,
+              images: images,
+              location: location,
+              title: title));
+          clearPickedImages();
+          notifyListeners();
         } else {
-          dynamic updateResponse = await UpdateService().service(
-              endpoint: 'visited/${myUid}/${postResponse['name']}.json',
-              body: {'id': postResponse['name']});
-          if (updateResponse != null) {
-            if (updateResponse.runtimeType == String) {
-              isPosting = false;
-              visitedPlaces.add(VisitedPlaceModel(
-                  description: description,
-                  id: postResponse['name'],
-                  dateTime: dateTime,
-                  images: images,
-                  location: location,
-                  title: title));
-              notifyListeners();
-              return updateResponse.toString();
-            } else {
-              isPosting = false;
-              notifyListeners();
-              return 'OK';
-            }
-          }
+          isPosting = false;
+          clearPickedImages();
+          notifyListeners();
         }
+      } else {
+        isPosting = false;
+        clearPickedImages();
+        notifyListeners();
       }
-    } on SocketException {
-      return 'Some error occurred';
-    } catch (e) {
-      return 'Some error occurred';
-    }
+    } catch (e) {}
   }
 
   Future<List<dynamic>> getImageUrls(
