@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:safari/controller/constants/cutom_icons.dart';
 import 'package:safari/controller/constants/device_size.dart';
+import 'package:safari/controller/providers/current_screen_provider.dart';
+import 'package:safari/controller/providers/search_screen_provider.dart';
 
 class PopularCategories extends StatelessWidget {
-  final List<Map<String, String>> popularCategories = [
-    {'type': 'Mountain', 'icon': CustomIcons.mountainIcon},
-    {'type': 'Mall', 'icon': CustomIcons.mallIcon},
-    {'type': 'Park', 'icon': CustomIcons.parkIcon},
-    {'type': 'Lake', 'icon': CustomIcons.lakeIcon},
-    {'type': 'Beach', 'icon': CustomIcons.beachIcon},
+  final List<Map<String, dynamic>> popularCategories = [
+    {'type': 'Mountain', 'icon': CustomIcons.mountainIcon,'index': 0},
+    {'type': 'Mall', 'icon': CustomIcons.mallIcon,'index': 1},
+    {'type': 'Park', 'icon': CustomIcons.parkIcon,'index': 2},
+    {'type': 'Lake', 'icon': CustomIcons.lakeIcon,'index': 4},
+    {'type': 'Beach', 'icon': CustomIcons.beachIcon,'index': 5},
   ];
 
   @override
@@ -24,26 +27,32 @@ class PopularCategories extends StatelessWidget {
           itemBuilder: (context, index) {
             return Padding(
               padding: const EdgeInsets.only(right: 16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  CircleAvatar(
-                    radius: displayWidth(context) * 0.08,
-                    backgroundColor: Colors.grey[200],
-                    backgroundImage:
-                        AssetImage(popularCategories[index]['icon']!),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Expanded(
-                    child: Text(
-                      popularCategories[index]['type']!,
-                      style:
-                          GoogleFonts.aldrich(color: Colors.teal, fontSize: 14),
+              child: InkWell(
+                onTap: () {
+                  Provider.of<SearchScreenProvider>(context,listen: false).setSelectedIndex(popularCategories[index]['index']!);
+                  Provider.of<CurrentScreenProvider>(context,listen: false).changeScreen(index: 1);
+                },
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    CircleAvatar(
+                      radius: displayWidth(context) * 0.08,
+                      backgroundColor: Colors.grey[200],
+                      backgroundImage:
+                          AssetImage(popularCategories[index]['icon']!),
                     ),
-                  )
-                ],
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Expanded(
+                      child: Text(
+                        popularCategories[index]['type']!,
+                        style:
+                            GoogleFonts.aldrich(color: Colors.teal, fontSize: 14),
+                      ),
+                    )
+                  ],
+                ),
               ),
             );
           },
