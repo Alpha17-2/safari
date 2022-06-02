@@ -12,16 +12,12 @@ class PostService {
       String? taskMessage,
       bool? dislayMessage}) async {
     try {
-      debugPrint('post body = ${body.toString()}');
+      debugPrint('post body : ${body.toString()}');
       var response = await http.post(Uri.parse(ServiceApi.base_url + endpoint!),
           body: json.encode(body));
       int statusCode = response.statusCode;
       switch (statusCode) {
         case 200:
-          debugPrint('post successfull');
-          if (response.body.isNotEmpty) {
-            debugPrint(response.body.toString());
-          }
           if (dislayMessage!) {
             ScaffoldMessenger.of(GlobalContext.contextKey.currentContext!)
                 .showSnackBar(SnackBar(content: Text(taskMessage!)));
