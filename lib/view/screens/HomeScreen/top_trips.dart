@@ -42,7 +42,7 @@ class TopTrips extends StatelessWidget {
                   style: TextStyle(
                     letterSpacing: 0.1,
                     color: Colors.teal[700],
-                    fontSize: 17,
+                    fontSize: 15,
                   )),
             ),
             const SizedBox(
@@ -55,7 +55,7 @@ class TopTrips extends StatelessWidget {
                 const Icon(
                   Icons.location_pin,
                   color: Colors.black54,
-                  size: 18,
+                  size: 16,
                 ),
                 const VerticalDivider(
                   width: 5,
@@ -67,7 +67,7 @@ class TopTrips extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                           color: Colors.black54,
-                          fontSize: 13.5,
+                          fontSize: 12,
                           fontWeight: FontWeight.w500)),
                 ),
               ],

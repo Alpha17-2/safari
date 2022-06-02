@@ -17,7 +17,7 @@ class CustomNavigationBar extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
         color: CustomColors.primary,
       ),
-      height: displayHeight(context) * 0.08,
+      height: displayHeight(context) * 0.07,
       width: displayWidth(context) * 0.8,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,

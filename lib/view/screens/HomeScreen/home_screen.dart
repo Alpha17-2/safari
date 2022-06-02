@@ -20,7 +20,7 @@ class HomeScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
+            SizedBox(
               width: displayWidth(context) * 0.7,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -43,7 +43,7 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             const SearchCard(),
             const SizedBox(
               height: 20,
@@ -68,19 +68,26 @@ class HomeScreen extends StatelessWidget {
                       fontSize: displayWidth(context) * 0.05,
                       fontWeight: FontWeight.w600),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Explore more',
-                      style: TextStyle(
-                          color: Colors.teal[200], fontWeight: FontWeight.w600),
-                    ),
-                    const Icon(
-                      Icons.arrow_forward,
-                      color: Colors.teal,
-                    )
-                  ],
+                InkWell(
+                  onTap: () {
+                    // TODO:
+                    // Navigate to search screen after setting search category to top trips
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Explore more',
+                        style: TextStyle(
+                            color: Colors.teal[200],
+                            fontWeight: FontWeight.w600),
+                      ),
+                      const Icon(
+                        Icons.arrow_forward,
+                        color: Colors.teal,
+                      )
+                    ],
+                  ),
                 )
               ],
             ),
