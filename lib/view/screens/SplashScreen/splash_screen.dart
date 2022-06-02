@@ -40,11 +40,14 @@ class _SplashScreenState extends State<SplashScreen> {
               builder: (context) => AppScreen(),
             ));
       } else {
-        Navigator.pushReplacement(
+        if(mounted){
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(
               builder: (context) => AppScreen(),
             ));
+        }
+        
       }
     }
   }
