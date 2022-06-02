@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:safari/controller/constants/custom_colors.dart';
 import 'package:safari/controller/constants/device_size.dart';
 import 'package:safari/controller/providers/places_provider.dart';
 import 'package:safari/model/place_model.dart';
@@ -25,11 +27,18 @@ class TopTrips extends StatelessWidget {
           children: [
             ClipRRect(
                 borderRadius: BorderRadius.circular(20),
-                child: Image.network(
-                  place.images.first.toString(),
+                child: CachedNetworkImage(
+                  imageUrl: place.images.first.toString(),
                   height: displayHeight(context) * 0.24,
                   width: displayWidth(context) * 0.5,
                   fit: BoxFit.cover,
+                  progressIndicatorBuilder: (context, url, progress) => Center(
+                    child: CircularProgressIndicator(
+                      value: progress.progress,
+                      valueColor: const AlwaysStoppedAnimation<Color>(
+                          CustomColors.primary),
+                    ),
+                  ),
                 )),
             const SizedBox(
               height: 10,

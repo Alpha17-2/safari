@@ -1,6 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:safari/controller/constants/custom_colors.dart';
 import 'package:safari/controller/constants/device_size.dart';
 import 'package:safari/model/place_model.dart';
+import 'package:shimmer/shimmer.dart';
 
 import 'favourite_place.dart';
 
@@ -29,14 +32,21 @@ class PlaceUI extends StatelessWidget {
             alignment: Alignment.center,
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: Image.network(
-                  place.images[0],
-                  height: displayHeight(context) * 0.31,
-                  width: displayWidth(context) * 0.85,
-                  fit: BoxFit.cover,
-                ),
-              ),
+                  borderRadius: BorderRadius.circular(10),
+                  child: CachedNetworkImage(
+                    imageUrl: place.images[0],
+                    height: displayHeight(context) * 0.31,
+                    width: displayWidth(context) * 0.85,
+                    fit: BoxFit.cover,
+                    progressIndicatorBuilder: (context, url, progress) =>
+                        Center(
+                      child: CircularProgressIndicator(
+                        value: progress.progress,
+                        valueColor: const AlwaysStoppedAnimation<Color>(
+                            CustomColors.primary),
+                      ),
+                    ),
+                  )),
               Positioned(
                   top: displayHeight(context) * 0.02,
                   right: displayWidth(context) * 0.06,

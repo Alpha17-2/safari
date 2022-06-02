@@ -1,6 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:safari/controller/constants/custom_colors.dart';
 import 'package:safari/controller/constants/device_size.dart';
 import 'package:safari/controller/providers/places_provider.dart';
 import 'package:safari/model/place_model.dart';
@@ -33,9 +35,17 @@ class ImagePreview extends StatelessWidget {
                 return SizedBox(
                     width: displayWidth(context),
                     height: displayHeight(context) * 0.5,
-                    child: Image.network(
-                      i.toString(),
+                    child: CachedNetworkImage(
+                      imageUrl: i.toString(),
                       fit: BoxFit.cover,
+                      progressIndicatorBuilder: (context, url, progress) =>
+                          Center(
+                        child: CircularProgressIndicator(
+                          value: progress.progress,
+                          valueColor: const AlwaysStoppedAnimation<Color>(
+                              CustomColors.primary),
+                        ),
+                      ),
                     ));
               },
             );

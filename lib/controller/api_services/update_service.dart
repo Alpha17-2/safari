@@ -26,6 +26,7 @@ class UpdateService {
         var response = await http.patch(
             Uri.parse(ServiceApi.base_url + endpoint),
             body: json.encode(body));
+        debugPrint('update response : ${response.body.toString()}');
         int statusCode = response.statusCode;
         switch (statusCode) {
           case 200:
