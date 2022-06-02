@@ -9,17 +9,24 @@ class VisitedPlaces extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<VisitedPlaceModel> visitedPlaces =
         Provider.of<VisitedPlacesProvider>(context).getVisitedPlaces;
-    return ListView.builder(
-      padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
-      itemCount: visitedPlaces.length,
-      itemBuilder: (context, index) {
-        return Padding(
-          padding: const EdgeInsets.only(
-            bottom: 10,
-          ),
-          child: ShowPlace(visitedPlaceModel: visitedPlaces[index]),
-        );
-      },
-    );
+    return (visitedPlaces.isEmpty)
+        ? const Center(
+            child: Text(
+              'Visit places and add your experience here !!',
+              textAlign: TextAlign.center,
+            ),
+          )
+        : ListView.builder(
+            padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
+            itemCount: visitedPlaces.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.only(
+                  bottom: 10,
+                ),
+                child: ShowPlace(visitedPlaceModel: visitedPlaces[index]),
+              );
+            },
+          );
   }
 }

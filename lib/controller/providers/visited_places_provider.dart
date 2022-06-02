@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:safari/controller/api_services/get_service.dart';
 import 'package:safari/controller/api_services/post_service.dart';
 import 'package:safari/controller/api_services/update_service.dart';
 import 'package:safari/controller/firebase_services/upload_image.dart';
@@ -11,7 +12,7 @@ class VisitedPlacesProvider extends ChangeNotifier {
 
   final List<XFile> pickedImages = [];
 
-  final List<VisitedPlaceModel> visitedPlaces = [];
+  List<VisitedPlaceModel> visitedPlaces = [];
 
   // getters
   List<VisitedPlaceModel> get getVisitedPlaces => [...visitedPlaces];
@@ -32,6 +33,26 @@ class VisitedPlacesProvider extends ChangeNotifier {
   void removeThisImage(int index) {
     pickedImages.removeAt(index);
     notifyListeners();
+  }
+
+  Future<void> setVisitedPlaces(String myUid) async {
+    try {
+      final getResponse =
+          await GetApiService().service(endpoint: 'visited/$myUid.json');
+      if (getResponse != null) {
+        List<VisitedPlaceModel> temp = [];
+        final getData = getResponse as Map<String, dynamic>;
+        getData.forEach((key, value) {
+          temp.add(VisitedPlaceModel.fromJson(value));
+        });
+        visitedPlaces = temp;
+        notifyListeners();
+      } else {
+        debugPrint('response is null');
+      }
+    } catch (error) {
+      debugPrint(error.toString());
+    }
   }
 
   Future<void> addVisitedPlace(
@@ -65,7 +86,6 @@ class VisitedPlacesProvider extends ChangeNotifier {
           });
 
       if (postResponse != null) {
-        
         dynamic updateResponse = await UpdateService().service(
             showMessage: true,
             taskMessage: 'New place added',

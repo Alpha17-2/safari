@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:safari/controller/constants/calender_constants.dart';
+import 'package:safari/controller/constants/device_size.dart';
 import 'package:safari/controller/providers/visited_places_provider.dart';
 import 'package:safari/view/screens/ProfileScreen/picked_images.dart';
 import 'package:safari/view/viewModels/custom_textfield.dart';
@@ -25,21 +27,6 @@ class _NewVisitedPlaceState extends State<NewVisitedPlace> {
 
   String myUid = FirebaseAuth.instance.currentUser!.uid;
 
-  Map<int, String> months = {
-    1: 'January',
-    2: 'February',
-    3: 'March',
-    4: 'April',
-    5: 'May',
-    6: 'June',
-    7: 'July',
-    8: 'August',
-    9: 'September',
-    10: 'October',
-    11: 'November',
-    12: 'December',
-  };
-
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
         context: context,
@@ -50,7 +37,8 @@ class _NewVisitedPlaceState extends State<NewVisitedPlace> {
       setState(() {
         currentDate = picked;
         dateCtr = TextEditingController(
-            text: "${picked.day} ${months[picked.month]}, ${picked.year}");
+            text:
+                "${picked.day} ${CalenderConstant.months[picked.month]}, ${picked.year}");
       });
     }
   }
@@ -109,13 +97,16 @@ class _NewVisitedPlaceState extends State<NewVisitedPlace> {
                       const SizedBox(
                         height: 25,
                       ),
-                      CustomTextField(
-                        controller: titleCtr,
-                        label: 'Title',
-                        maxlines: 1,
-                        borderColor: Colors.black,
-                        obscureText: false,
-                        textColor: Colors.black,
+                      SizedBox(
+                        height: displayHeight(context) * 0.068,
+                        child: CustomTextField(
+                          controller: titleCtr,
+                          label: 'Title',
+                          maxlines: 1,
+                          borderColor: Colors.black,
+                          obscureText: false,
+                          textColor: Colors.black,
+                        ),
                       ),
                       const SizedBox(
                         height: 15,
@@ -131,46 +122,52 @@ class _NewVisitedPlaceState extends State<NewVisitedPlace> {
                       const SizedBox(
                         height: 15,
                       ),
-                      CustomTextField(
-                        controller: locationCtr,
-                        label: 'Location',
-                        maxlines: 1,
-                        borderColor: Colors.black,
-                        obscureText: false,
-                        textColor: Colors.black,
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      TextFormField(
-                        onTap: () async {
-                          _selectDate(context);
-                        },
-                        readOnly: true,
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Field cannot be empty';
-                          }
-                          return null;
-                        },
-                        controller: dateCtr,
-                        decoration: InputDecoration(
-                          focusColor: Colors.black,
-                          labelText: "Date",
-                          labelStyle: const TextStyle(color: Colors.black),
-                          fillColor: Colors.black,
-                          enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
-                              borderSide:
-                                  const BorderSide(color: Colors.black)),
-                          focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
-                              borderSide: const BorderSide(
-                                  color: Colors.black, width: 1)),
+                      SizedBox(
+                        height: displayHeight(context) * 0.068,
+                        child: CustomTextField(
+                          controller: locationCtr,
+                          label: 'Location',
+                          maxlines: 1,
+                          borderColor: Colors.black,
+                          obscureText: false,
+                          textColor: Colors.black,
                         ),
                       ),
                       const SizedBox(
                         height: 15,
+                      ),
+                      SizedBox(
+                        height: displayHeight(context) * 0.068,
+                        child: TextFormField(
+                          onTap: () async {
+                            _selectDate(context);
+                          },
+                          readOnly: true,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Field cannot be empty';
+                            }
+                            return null;
+                          },
+                          controller: dateCtr,
+                          decoration: InputDecoration(
+                            focusColor: Colors.black,
+                            labelText: "Date",
+                            labelStyle: const TextStyle(color: Colors.black),
+                            fillColor: Colors.black,
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                borderSide:
+                                    const BorderSide(color: Colors.black)),
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                borderSide: const BorderSide(
+                                    color: Colors.black, width: 1)),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 12,
                       ),
                       PickedImages(),
                     ],
