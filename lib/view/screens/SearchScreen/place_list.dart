@@ -5,6 +5,7 @@ import 'package:safari/controller/constants/device_size.dart';
 import 'package:safari/controller/providers/places_provider.dart';
 import 'package:safari/controller/providers/search_screen_provider.dart';
 import 'package:safari/model/place_model.dart';
+import 'package:safari/view/screens/PlaceDetailScreen/place_detail_screen.dart';
 import 'package:safari/view/viewModels/PlaceUI.dart';
 import 'package:safari/view/viewModels/favourite_place.dart';
 
@@ -23,7 +24,15 @@ class PlaceList extends StatelessWidget {
     return ListView.builder(
       itemCount: list.length,
       itemBuilder: (context, index) {
-        return PlaceUI(myUid: myUid, place: list[index]);
+        return InkWell(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PlaceDetailScreen(id: list[index].id),
+                  ));
+            },
+            child: PlaceUI(myUid: myUid, place: list[index]));
       },
     );
   }

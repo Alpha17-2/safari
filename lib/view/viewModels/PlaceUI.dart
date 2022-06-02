@@ -7,7 +7,7 @@ import 'favourite_place.dart';
 class PlaceUI extends StatelessWidget {
   final PlaceModel place;
   final String myUid;
-  PlaceUI({required this.myUid,required this.place});
+  PlaceUI({required this.myUid, required this.place});
 
   @override
   Widget build(BuildContext context) {
@@ -41,36 +41,42 @@ class PlaceUI extends StatelessWidget {
                   top: displayHeight(context) * 0.02,
                   right: displayWidth(context) * 0.06,
                   child: SizedBox(
-                    height: 50,
-                    width: 50,
+                    height: 45,
+                    width: 45,
                     child: Card(
                       color: Colors.white,
                       child: IsFavouritePlace(placeId: place.id, myUid: myUid),
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12)),
+                          borderRadius: BorderRadius.circular(8)),
                     ),
                   )),
               Positioned(
                   bottom: displayWidth(context) * 0.05,
+                  left: displayWidth(context) * 0.05,
                   child: Container(
                       padding: const EdgeInsets.only(
-                          left: 12, right: 12, bottom: 4, top: 10),
-                      height: displayHeight(context) * 0.085,
-                      width: displayWidth(context) * 0.75,
+                          left: 12, right: 12, bottom: 2, top: 10),
+                      height: displayHeight(context) * 0.075,
+                      width: displayWidth(context) * 0.5,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(15),
                         color: Colors.white.withOpacity(0.75),
                       ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            place.title,
-                            style: const TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 16),
+                          SizedBox(
+                            width: displayWidth(context) * 0.36,
+                            child: Text(
+                              place.title,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              style: const TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14.5),
+                            ),
                           ),
                           const SizedBox(
                             height: 2,
@@ -82,7 +88,7 @@ class PlaceUI extends StatelessWidget {
                               const Icon(
                                 Icons.location_pin,
                                 color: Colors.black54,
-                                size: 18,
+                                size: 14,
                               ),
                               const VerticalDivider(
                                 width: 2,
@@ -94,7 +100,7 @@ class PlaceUI extends StatelessWidget {
                                     overflow: TextOverflow.ellipsis,
                                     style: const TextStyle(
                                       color: Colors.black87,
-                                      fontSize: 14,
+                                      fontSize: 12,
                                     )),
                               ),
                             ],

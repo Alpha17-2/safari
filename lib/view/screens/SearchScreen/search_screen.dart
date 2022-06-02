@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:safari/controller/constants/device_size.dart';
 import 'package:safari/controller/providers/search_screen_provider.dart';
 import 'package:safari/model/place_model.dart';
+import 'package:safari/view/screens/PlaceDetailScreen/place_detail_screen.dart';
 import 'package:safari/view/screens/SearchScreen/place_list.dart';
 import 'package:safari/view/screens/SearchScreen/search_place_list.dart';
 
@@ -45,7 +46,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 color: (selectedIndex == index)
                     ? Colors.teal[400]
                     : Colors.black54,
-                fontSize: 16,
+                fontSize: 14,
                 fontWeight: (selectedIndex == index)
                     ? FontWeight.bold
                     : FontWeight.w500),
@@ -59,14 +60,12 @@ class _SearchScreenState extends State<SearchScreen> {
           initialData: false,
           stream: isTypingController.stream,
           builder: (context, snapshot) {
-            if (snapshot.hasData) {}
             return Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   SizedBox(
-                    height: displayHeight(context) * 0.15,
+                    height: displayHeight(context) * 0.12,
                     width: displayWidth(context),
-                    //color: Colors.black26,
                     child: Center(
                       child: SizedBox(
                         height: displayHeight(context) * 0.08,
@@ -115,7 +114,6 @@ class _SearchScreenState extends State<SearchScreen> {
                   ),
                   Container(
                     padding: const EdgeInsets.only(right: 10),
-                    //color: Colors.amber,
                     height: displayHeight(context) * 0.06,
                     width: displayWidth(context),
                     child: ListView.builder(

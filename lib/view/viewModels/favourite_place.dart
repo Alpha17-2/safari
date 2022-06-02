@@ -17,7 +17,7 @@ class IsFavouritePlace extends StatelessWidget {
     bool loadIconStatus =
         Provider.of<PlacesProvider>(context).getIsSavingStatus;
     return LikeButton(
-      size: 25,
+      size: 20,
       circleColor: const CircleColor(start: Colors.red, end: Colors.white),
       isLiked: (place.likedBy.contains(myUid)),
       onTap: (data) async {
