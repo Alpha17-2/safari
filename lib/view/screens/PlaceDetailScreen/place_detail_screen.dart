@@ -37,8 +37,8 @@ class PlaceDetailScreen extends StatelessWidget {
                     child: Text(
                       place.title,
                       style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w800,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
                         color: Colors.teal[400]!,
                       ),
                       maxLines: 2,
@@ -58,7 +58,7 @@ class PlaceDetailScreen extends StatelessWidget {
                         child: Text(
                           place.location,
                           style: const TextStyle(
-                            fontSize: 15,
+                            fontSize: 12.5,
                             color: Colors.black45,
                           ),
                           maxLines: 2,
