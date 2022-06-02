@@ -60,11 +60,8 @@ class PlacesProvider extends ChangeNotifier {
   Future<dynamic> setPlaces() async {
     List<PlaceModel> tempPlaces = [];
     try {
-      dynamic body = await GetService().service(endpoint: 'allplaces.json');
-      if (body.runtimeType == String && body.toString() == 'no internet') {
-        return 'no internet';
-      }
-      if (body != null && body.runtimeType != String) {
+      dynamic body = await GetApiService().service(endpoint: 'allplaces.json');
+      if (body != null) {
         Map<String, dynamic> data = body as Map<String, dynamic>;
         data.forEach((key, value) {
           tempPlaces.add(PlaceModel.fromJson(value as Map<String, dynamic>));
@@ -72,11 +69,6 @@ class PlacesProvider extends ChangeNotifier {
         places = tempPlaces;
         successFullApiCall = true;
         notifyListeners();
-        return 'OK';
-      } else {
-        successFullApiCall = false;
-        notifyListeners();
-        return body.toString();
       }
     } on SocketException {
       successFullApiCall = false;
@@ -99,36 +91,33 @@ class PlacesProvider extends ChangeNotifier {
     notifyListeners();
     try {
       dynamic getResponse =
-          await GetService().service(endpoint: 'allplaces/${placeId}.json');
+          await GetApiService().service(endpoint: 'allplaces/${placeId}.json');
       if (getResponse != null) {
-        if (getResponse.runtimeType == String) {
+        PlaceModel tempModel =
+            PlaceModel.fromJson(getResponse as Map<String, dynamic>);
+        List<dynamic> likedBy = tempModel.likedBy;
+        likedBy.contains(myUid) ? likedBy.remove(myUid) : likedBy.add(myUid);
+        dynamic updateResponse = UpdateService().service(
+            showMessage: false,
+            taskMessage: '',
+            endpoint: 'allplaces/$placeId.json',
+            body: {'likedBy': likedBy});
+        if (updateResponse != null) {
+          int getIndexOfPlace =
+              places.indexWhere((element) => element.id == placeId);
+          places[getIndexOfPlace].toggleLikeStatus(myUid);
           isLikingStatus = false;
           notifyListeners();
-          return getResponse.toString();
+          return 'OK';
         } else {
-          PlaceModel tempModel =
-              PlaceModel.fromJson(getResponse as Map<String, dynamic>);
-          List<dynamic> likedBy = tempModel.likedBy;
-          likedBy.contains(myUid) ? likedBy.remove(myUid) : likedBy.add(myUid);
-          dynamic updateResponse = UpdateService().service(
-              endpoint: 'allplaces/$placeId.json', body: {'likedBy': likedBy});
-          if (updateResponse.runtimeType != String) {
-            int getIndexOfPlace =
-                places.indexWhere((element) => element.id == placeId);
-            places[getIndexOfPlace].toggleLikeStatus(myUid);
-            isLikingStatus = false;
-            notifyListeners();
-            return 'OK';
-          } else {
-            isLikingStatus = false;
-            notifyListeners();
-            return updateResponse.toString();
-          }
+          isLikingStatus = false;
+          notifyListeners();
+          return 'NOT-OK';
         }
       } else {
         isLikingStatus = false;
         notifyListeners();
-        return 'Some error occurred';
+        return 'NOT-OK';
       }
     } on SocketException {
       isLikingStatus = false;

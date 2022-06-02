@@ -17,161 +17,177 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isUserFetched =
+        Provider.of<UserProvider>(context).getIsUserFetched!;
     final UserModel? user = Provider.of<UserProvider>(context).getUser;
     final List<VisitedPlaceModel> visitedPlacesList =
         Provider.of<VisitedPlacesProvider>(context).getVisitedPlaces;
     return Container(
       height: displayHeight(context),
       width: displayWidth(context),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Image.asset(
-            'assets/images/profile_cover.jpg',
-            height: displayHeight(context) * 0.16,
-            width: displayWidth(context),
-            fit: BoxFit.cover,
-          ),
-          const SizedBox(
-            height: 12,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-            child: Row(
+      child: (isUserFetched)
+          ? Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                CircleAvatar(
-                  radius: displayWidth(context) * 0.1,
-                  backgroundImage:
-                      const AssetImage('assets/images/profile_cover.jpg'),
+                Image.asset(
+                  'assets/images/profile_cover.jpg',
+                  height: displayHeight(context) * 0.16,
+                  width: displayWidth(context),
+                  fit: BoxFit.cover,
                 ),
                 const SizedBox(
-                  width: 15,
+                  height: 12,
                 ),
-                Row(
-                  children: [
-                    Text(
-                      user!.title!,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black87,
-                          fontSize: 16,
-                          letterSpacing: 0.05),
-                    ),
-                    IconButton(
-                        iconSize: 18,
-                        onPressed: () {
-                          showDialog(
-                              context: context,
-                              builder: (conntext) {
-                                return EditName();
-                              });
-                        },
-                        icon: const Icon(
-                          Icons.edit,
-                          color: Colors.teal,
-                        ))
-                  ],
-                ),
-                const SizedBox(
-                  width: 50,
-                ),
-                Expanded(
-                  child: IconButton(
-                    onPressed: () {
-                      showModalBottomSheet(
-                          backgroundColor: Colors.white,
-                          isScrollControlled: true,
-                          constraints: BoxConstraints.loose(Size(
-                              MediaQuery.of(context).size.width,
-                              MediaQuery.of(context).size.height * 0.75)),
-                          shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(15),
-                                  topRight: Radius.circular(15))),
-                          context: context,
-                          builder: (context) {
-                            return Padding(
-                              padding: EdgeInsets.only(
-                                  top: MediaQuery.of(context).padding.top),
-                              child: NewVisitedPlace(),
-                            );
-                          });
-                    },
-                    icon: const Icon(Icons.add),
-                    color: Colors.red,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Center(
-            child: SizedBox(
-              width: displayWidth(context) * 0.55,
-              height: displayHeight(context) * 0.08,
-              child: Card(
-                color: Colors.white,
-                elevation: 2,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 12.0, right: 12.0),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0, right: 8.0),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                      CircleAvatar(
+                        radius: displayWidth(context) * 0.1,
+                        backgroundImage:
+                            const AssetImage('assets/images/profile_cover.jpg'),
+                      ),
+                      const SizedBox(
+                        width: 15,
+                      ),
+                      Row(
                         children: [
-                          const Text(
-                            'Visited',
-                            style: TextStyle(
+                          Text(
+                            user!.title!,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w500,
                                 color: Colors.black87,
                                 fontSize: 16,
-                                fontWeight: FontWeight.w500),
+                                letterSpacing: 0.05),
                           ),
-                          Text(
-                            visitedPlacesList.length.toString(),
-                            style: const TextStyle(
-                                color: Colors.black38,
-                                fontSize: 15,
-                                fontWeight: FontWeight.w600),
-                          )
+                          IconButton(
+                              iconSize: 18,
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (conntext) {
+                                      return EditName();
+                                    });
+                              },
+                              icon: const Icon(
+                                Icons.edit,
+                                color: Colors.teal,
+                              ))
                         ],
                       ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const Text(
-                            'Saved',
-                            style: TextStyle(
-                                color: Colors.black87,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500),
-                          ),
-                          Text(
-                            Provider.of<PlacesProvider>(context, listen: false)
-                                .getLikedPlaces(user.id!)
-                                .length
-                                .toString(),
-                            style: const TextStyle(
-                                color: Colors.black38,
-                                fontSize: 15,
-                                fontWeight: FontWeight.w600),
-                          )
-                        ],
+                      const SizedBox(
+                        width: 50,
+                      ),
+                      Expanded(
+                        child: IconButton(
+                          onPressed: () {
+                            showModalBottomSheet(
+                                backgroundColor: Colors.white,
+                                isScrollControlled: true,
+                                constraints: BoxConstraints.loose(Size(
+                                    MediaQuery.of(context).size.width,
+                                    MediaQuery.of(context).size.height * 0.75)),
+                                shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(15),
+                                        topRight: Radius.circular(15))),
+                                context: context,
+                                builder: (context) {
+                                  return Padding(
+                                    padding: EdgeInsets.only(
+                                        top:
+                                            MediaQuery.of(context).padding.top),
+                                    child: NewVisitedPlace(),
+                                  );
+                                });
+                          },
+                          icon: const Icon(Icons.add),
+                          color: Colors.red,
+                        ),
                       ),
                     ],
                   ),
                 ),
-              ),
+                Center(
+                  child: SizedBox(
+                    width: displayWidth(context) * 0.55,
+                    height: displayHeight(context) * 0.08,
+                    child: Card(
+                      color: Colors.white,
+                      elevation: 2,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 12.0, right: 12.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Text(
+                                  'Visited',
+                                  style: TextStyle(
+                                      color: Colors.black87,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                Text(
+                                  visitedPlacesList.length.toString(),
+                                  style: const TextStyle(
+                                      color: Colors.black38,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600),
+                                )
+                              ],
+                            ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Text(
+                                  'Saved',
+                                  style: TextStyle(
+                                      color: Colors.black87,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                Text(
+                                  Provider.of<PlacesProvider>(context,
+                                          listen: false)
+                                      .getLikedPlaces(user.id!)
+                                      .length
+                                      .toString(),
+                                  style: const TextStyle(
+                                      color: Colors.black38,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 5),
+                Expanded(child: VisitedPlaces()),
+              ],
+            )
+          : Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: const [
+                CircularProgressIndicator(),
+                SizedBox(
+                  height: 10,
+                ),
+                Text('Loading profile'),
+              ],
             ),
-          ),
-          const SizedBox(height: 5),
-          Expanded(child: VisitedPlaces()),
-        ],
-      ),
     );
   }
 }

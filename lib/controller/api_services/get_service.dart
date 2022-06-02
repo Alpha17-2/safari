@@ -1,40 +1,39 @@
 import 'dart:convert';
-import 'dart:io';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:safari/controller/constants/global_context.dart';
 import 'package:safari/controller/constants/service_api_constants.dart';
 
-class GetService {
-  Future<dynamic> service({required String endpoint}) async {
+class GetApiService {
+  Future<dynamic> service({String? endpoint}) async {
     try {
-      final internetResponse = await InternetAddress.lookup('google.com');
-      if (internetResponse.isEmpty) {
-        return;
+      var response = await http.get(Uri.parse(ServiceApi.base_url + endpoint!));
+      int statusCode = response.statusCode;
+      switch (statusCode) {
+        case 200:
+          debugPrint('response = ' + response.body.toString());
+          return json.decode(response.body) ?? {};
+        case 400:
+          ScaffoldMessenger.of(GlobalContext.contextKey.currentContext!)
+              .showSnackBar(const SnackBar(content: Text('Bad request')));
+          return null;
+
+        case 401:
+          ScaffoldMessenger.of(GlobalContext.contextKey.currentContext!)
+              .showSnackBar(const SnackBar(content: Text('Unauthorised')));
+
+          return null;
+        default:
+          ScaffoldMessenger.of(GlobalContext.contextKey.currentContext!)
+              .showSnackBar(const SnackBar(
+                  content: Text('Network connectivity problem')));
+          return null;
       }
-      //print(internetResponse);
-      if (internetResponse.isNotEmpty &&
-          internetResponse[0].rawAddress.isNotEmpty) {
-        var response =
-            await http.get(Uri.parse(ServiceApi.base_url + endpoint));
-        int statusCode = response.statusCode;
-        //print(statusCode);
-        switch (statusCode) {
-          case 200:
-            return json.decode(response.body) as Map<String, dynamic>;
-          case 400:
-            return 'Bad request';
-          case 401:
-            return 'Unauthorised';
-          default:
-            break;
-        }
-      } else {
-        return 'no internet';
-      }
-    } on SocketException catch (_) {
-      //print('2. no internet');
-      return 'no internet';
     } catch (e) {
-      print(e.toString());
+      if (kDebugMode) {
+        print(e.toString());
+      }
     }
   }
 }

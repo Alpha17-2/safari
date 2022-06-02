@@ -1,8 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:like_button/like_button.dart';
 import 'package:provider/provider.dart';
-import 'package:safari/controller/constants/custom_colors.dart';
 import 'package:safari/controller/constants/device_size.dart';
 import 'package:safari/controller/providers/places_provider.dart';
 import 'package:safari/model/place_model.dart';
@@ -19,8 +17,6 @@ class ImagePreview extends StatelessWidget {
     final PlaceModel place =
         Provider.of<PlacesProvider>(context).getPlaceUsingId(placeId!);
     List<dynamic> networkImages = place.images;
-    bool loadIconStatus =
-        Provider.of<PlacesProvider>(context).getIsSavingStatus;
     return Stack(
       children: [
         CarouselSlider(

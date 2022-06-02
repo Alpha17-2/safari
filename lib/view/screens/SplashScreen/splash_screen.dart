@@ -25,29 +25,13 @@ class _SplashScreenState extends State<SplashScreen> {
 
   setup() async {
     if (mounted) {
-      var response =
-          await Provider.of<PlacesProvider>(context, listen: false).setPlaces();
-      if (response.toString() == 'no internet') {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('No Internet Connection'),
-          backgroundColor: Colors.red,
-          duration: Duration(seconds: 2),
-        ));
-        await Future.delayed(const Duration(seconds: 2));
+      await Provider.of<PlacesProvider>(context, listen: false).setPlaces();
+      if (mounted) {
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
               builder: (context) => AppScreen(),
             ));
-      } else {
-        if(mounted){
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => AppScreen(),
-            ));
-        }
-        
       }
     }
   }
@@ -90,7 +74,7 @@ class _SplashScreenState extends State<SplashScreen> {
             SizedBox(
               height: displayHeight(context) * 0.04,
             ),
-            const Center(child:  CircularProgressIndicator(color: Colors.white)),
+            const Center(child: CircularProgressIndicator(color: Colors.white)),
           ],
         ),
       ),

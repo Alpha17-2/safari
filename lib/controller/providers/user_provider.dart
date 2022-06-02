@@ -8,7 +8,7 @@ import '../api_services/put_service.dart';
 
 class UserProvider extends ChangeNotifier {
   UserModel? currentUser;
-  bool? isUserFetched;
+  bool isUserFetched = false;
 
   // getters
 
@@ -54,34 +54,25 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<dynamic> setUser(String uid) async {
+  Future<void> setUser(String uid) async {
     debugPrint('setting user');
     UserModel? tempUserModel;
     try {
-      dynamic body = await GetService().service(endpoint: 'users/$uid.json');
-      if (body.runtimeType == String && body.toString() == 'no internet') {
-        return 'no internet';
-      } else if (body == null) {
-        return 'No data found';
-      } else if (body.runtimeType == String) {
-        return body.toString();
-      } else {
-        Map<String, dynamic> data = body as Map<String, dynamic>;
+      var body = await GetApiService().service(endpoint: 'users/$uid.json');
+      Map<String, dynamic> data = body as Map<String, dynamic>;
+      if (data.isNotEmpty) {
         tempUserModel = UserModel.fromJson(data);
         currentUser = tempUserModel;
         isUserFetched = true;
         notifyListeners();
-        return 'OK';
+      } else {
+        isUserFetched = false;
+        notifyListeners();
       }
-    } on SocketException {
-      isUserFetched = false;
-      notifyListeners();
-      return 'Some error occurred';
     } catch (e) {
       if (kDebugMode) {
         isUserFetched = false;
         notifyListeners();
-        return 'Some error occurred';
       }
     }
     notifyListeners();

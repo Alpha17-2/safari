@@ -22,8 +22,8 @@ class IsFavouritePlace extends StatelessWidget {
       isLiked: (place.likedBy.contains(myUid)),
       onTap: (data) async {
         if (!loadIconStatus) {
-          dynamic response =
-              await Provider.of<PlacesProvider>(context, listen: false)
+          
+             final response =  await Provider.of<PlacesProvider>(context, listen: false)
                   .toggleLikeOptionForPlace(placeId: placeId, myUid: myUid);
           if (response.toString() != 'OK') {
             ScaffoldMessenger.of(context)

@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:safari/controller/constants/global_context.dart';
 import 'package:safari/controller/firebase_services/auth_services.dart';
 import 'package:safari/controller/providers/auth_container_provider.dart';
 import 'package:safari/controller/providers/current_screen_provider.dart';
@@ -53,6 +54,7 @@ class SafariApp extends StatelessWidget {
         )
       ],
       child: MaterialApp(
+        navigatorKey: GlobalContext.contextKey,
         debugShowCheckedModeBanner: false,
         home: Consumer<AuthNotifier>(
           builder: (context, notifier, child) {
