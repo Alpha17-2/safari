@@ -12,7 +12,7 @@ class GetApiService {
       int statusCode = response.statusCode;
       switch (statusCode) {
         case 200:
-          debugPrint('response = ' + response.body.toString());
+          debugPrint('get response = ' + response.body.toString());
           return json.decode(response.body) ?? {};
         case 400:
           ScaffoldMessenger.of(GlobalContext.contextKey.currentContext!)

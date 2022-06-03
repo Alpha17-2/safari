@@ -1,8 +1,5 @@
-//import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:safari/controller/constants/custom_colors.dart';
 import 'package:safari/controller/constants/device_size.dart';
@@ -41,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.only(
-          top: 20,
+          top: 40,
           left: 16,
         ),
         height: displayHeight(context),
@@ -72,7 +69,7 @@ class _SplashScreenState extends State<SplashScreen> {
               fit: BoxFit.cover,
             ),
             SizedBox(
-              height: displayHeight(context) * 0.04,
+              height: displayHeight(context) * 0.1,
             ),
             const Center(child: CircularProgressIndicator(color: Colors.white)),
           ],

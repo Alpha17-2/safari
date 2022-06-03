@@ -183,7 +183,7 @@ class ProfileScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 const Text(
-                                  'Saved',
+                                  'Liked',
                                   style: TextStyle(
                                       color: Colors.black87,
                                       fontSize: 16,
