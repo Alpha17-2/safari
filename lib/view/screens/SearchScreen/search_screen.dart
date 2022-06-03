@@ -117,6 +117,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     height: displayHeight(context) * 0.06,
                     width: displayWidth(context),
                     child: ListView.builder(
+                      padding: EdgeInsets.zero,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
                         return showCategories(index);

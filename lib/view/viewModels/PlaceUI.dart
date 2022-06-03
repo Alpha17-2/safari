@@ -15,7 +15,7 @@ class PlaceUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(12.0),
+      padding: const EdgeInsets.only(left: 12.0, right: 12.0, top: 6),
       child: Card(
         elevation: 4,
         shape: RoundedRectangleBorder(
@@ -65,15 +65,15 @@ class PlaceUI extends StatelessWidget {
                   left: displayWidth(context) * 0.05,
                   child: Container(
                       padding: const EdgeInsets.only(
-                          left: 12, right: 12, bottom: 2, top: 10),
-                      height: displayHeight(context) * 0.075,
+                          left: 6, right: 12, bottom: 2, top: 4),
+                      height: displayHeight(context) * 0.068,
                       width: displayWidth(context) * 0.5,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         color: Colors.white.withOpacity(0.75),
                       ),
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(
