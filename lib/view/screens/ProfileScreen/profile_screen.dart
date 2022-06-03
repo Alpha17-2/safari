@@ -12,6 +12,8 @@ import 'package:safari/view/screens/ProfileScreen/editName.dart';
 import 'package:safari/view/screens/ProfileScreen/new_visited_place.dart';
 import 'package:safari/view/screens/ProfileScreen/visited_places.dart';
 
+import '../Authentication/auth_screen.dart';
+
 class ProfileScreen extends StatelessWidget {
   final Authservice _auth = Authservice(FirebaseAuth.instance);
 
@@ -22,19 +24,52 @@ class ProfileScreen extends StatelessWidget {
     final UserModel? user = Provider.of<UserProvider>(context).getUser;
     final List<VisitedPlaceModel> visitedPlacesList =
         Provider.of<VisitedPlacesProvider>(context).getVisitedPlaces;
-    return Container(
+    return SizedBox(
       height: displayHeight(context),
       width: displayWidth(context),
       child: (isUserFetched)
           ? Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Image.asset(
-                  'assets/images/profile_cover.jpg',
-                  height: displayHeight(context) * 0.16,
-                  width: displayWidth(context),
-                  fit: BoxFit.cover,
-                ),
+                Container(
+                    decoration: const BoxDecoration(
+                        image: DecorationImage(
+                            image:
+                                AssetImage('assets/images/profile_cover.jpg'),
+                            fit: BoxFit.cover)),
+                    height: displayHeight(context) * 0.16,
+                    width: displayWidth(context),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 45,
+                          width: 45,
+                          child: Card(
+                            elevation: 2,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5)),
+                            color: Colors.white.withOpacity(0.75),
+                            child: IconButton(
+                              iconSize: 20,
+                              icon: const Icon(Icons.logout),
+                              onPressed: () {
+                                _auth.signOut().then((value) {
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const AuthenticationScreen(),
+                                      ));
+                                });
+                              },
+                              color: Colors.black54,
+                            ),
+                          ),
+                        )
+                      ],
+                    )),
                 const SizedBox(
                   height: 12,
                 ),
@@ -66,7 +101,7 @@ class ProfileScreen extends StatelessWidget {
                               onPressed: () {
                                 showDialog(
                                     context: context,
-                                    builder: (conntext) {
+                                    builder: (context) {
                                       return EditName();
                                     });
                               },
@@ -148,7 +183,7 @@ class ProfileScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 const Text(
-                                  'Saved',
+                                  'Liked',
                                   style: TextStyle(
                                       color: Colors.black87,
                                       fontSize: 16,
@@ -191,13 +226,3 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 }
-
-// _auth.signOut().then((value) {
-//               Navigator.pushReplacement(
-//                   context,
-//                   MaterialPageRoute(
-//                     builder: (context) => AuthenticationScreen(),
-//                   ));
-//             });
-
-

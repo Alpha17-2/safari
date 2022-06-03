@@ -53,12 +53,16 @@ class _NewVisitedPlaceState extends State<NewVisitedPlace> {
             ? Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: const [
-                  CircularProgressIndicator(),
-                  SizedBox(
+                children: [
+                  Center(
+                    child: SizedBox(
+                        width: displayWidth(context) * 0.5,
+                        child: const LinearProgressIndicator()),
+                  ),
+                  const SizedBox(
                     height: 10,
                   ),
-                  Text('Adding new place')
+                  const Text('Adding new place')
                 ],
               )
             : Form(

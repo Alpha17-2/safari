@@ -52,7 +52,7 @@ class ShowPlace extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
+                SizedBox(
                   child: Text(
                     visitedPlaceModel.title,
                     overflow: TextOverflow.ellipsis,
@@ -67,26 +67,28 @@ class ShowPlace extends StatelessWidget {
                   height: 8,
                 ),
                 SizedBox(
-                  height: displayHeight(context) * 0.15,
+                  height: displayHeight(context) * 0.14,
                   child: Text(
                     visitedPlaceModel.description,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 7,
                     style:
-                        const TextStyle(color: Colors.black54, fontSize: 12.5),
+                        const TextStyle(color: Colors.black54, fontSize: 11.5),
                   ),
                 ),
                 const SizedBox(
                   height: 15,
                 ),
-                Text(
-                  '${visitedPlaceModel.location}, ${visitedPlaceModel.dateTime.day} ${CalenderConstant.months[visitedPlaceModel.dateTime.month]} ${visitedPlaceModel.dateTime.year}',
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 2,
-                  style: TextStyle(
-                      //fontWeight: FontWeight.w400,
-                      color: Colors.red[600],
-                      fontSize: 12),
+                SizedBox(
+                  child: Text(
+                    '${visitedPlaceModel.location}, ${visitedPlaceModel.dateTime.day} ${CalenderConstant.months[visitedPlaceModel.dateTime.month]} ${visitedPlaceModel.dateTime.year}',
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: Colors.teal,
+                        fontSize: 12),
+                  ),
                 ),
               ],
             )),
