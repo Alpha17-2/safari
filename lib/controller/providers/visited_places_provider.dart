@@ -18,6 +18,10 @@ class VisitedPlacesProvider extends ChangeNotifier {
   List<VisitedPlaceModel> get getVisitedPlaces => [...visitedPlaces];
   List<XFile> get getPickedImages => [...pickedImages];
   bool get getIsPosting => isPosting;
+  VisitedPlaceModel getVisitedPlaceUsingId(String id) {
+    int indexOfPlace = visitedPlaces.indexWhere((element) => element.id == id);
+    return visitedPlaces[indexOfPlace];
+  }
 
   // setters
   void setPickedImages(List<XFile> pickedList) {

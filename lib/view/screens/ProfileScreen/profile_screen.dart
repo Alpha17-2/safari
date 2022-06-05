@@ -9,10 +9,9 @@ import 'package:safari/controller/providers/visited_places_provider.dart';
 import 'package:safari/model/user_model.dart';
 import 'package:safari/model/visited_place_model.dart';
 import 'package:safari/view/screens/ProfileScreen/editName.dart';
-import 'package:safari/view/screens/ProfileScreen/new_visited_place.dart';
-import 'package:safari/view/screens/ProfileScreen/visited_places.dart';
-
 import '../Authentication/auth_screen.dart';
+import 'Visited Place/new_visited_place.dart';
+import 'Visited Place/visited_places.dart';
 
 class ProfileScreen extends StatelessWidget {
   final Authservice _auth = Authservice(FirebaseAuth.instance);
