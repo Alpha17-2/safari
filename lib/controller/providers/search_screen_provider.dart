@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 
 class SearchScreenProvider extends ChangeNotifier {
   final List<String> categories = [
+    'Top trips',
     'Mountain',
     'Mall',
     'Park',

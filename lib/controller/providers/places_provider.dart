@@ -38,7 +38,11 @@ class PlacesProvider extends ChangeNotifier {
   }
 
   List<PlaceModel> getPlaceType(String type) {
-    return [...places.where((place) => place.type == type).toList()];
+    if (type != 'Top trips') {
+      return [...places.where((place) => place.type == type).toList()];
+    } else {
+      return getTopTrips;
+    }
   }
 
   List<PlaceModel> get getTopTrips {
