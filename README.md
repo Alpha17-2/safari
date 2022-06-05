@@ -18,12 +18,13 @@
 * Clone the repository to your local machine 
 * Checkout the master branch
 * You will encounter errors because some files are missing .
+* Add this file in `lib/controller/constants/` and fill it with the base url of your api.
 
 ## Running the project with Firebase
 
 - Create a new project with the Firebase console.
 - Add Android app in the Firebase project settings.
-- On Android, use `com.Alpha.nexus` as the package name.
+- On Android, use `com.safari.safari` as the package name.
 - then, [download and copy](https://firebase.google.com/docs/flutter/setup#configure_an_android_app) `google-services.json` into `android/app`.
 
 
