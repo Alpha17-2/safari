@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:safari/controller/constants/device_size.dart';
+import 'package:safari/controller/providers/current_screen_provider.dart';
+import 'package:safari/controller/providers/search_screen_provider.dart';
 import 'package:safari/view/screens/HomeScreen/popular_categories.dart';
 import 'package:safari/view/screens/HomeScreen/search_card.dart';
 import 'package:safari/view/screens/HomeScreen/top_trips.dart';
@@ -70,8 +73,10 @@ class HomeScreen extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    // TODO:
-                    // Navigate to search screen after setting search category to top trips
+                    Provider.of<SearchScreenProvider>(context, listen: false)
+                        .setSelectedIndex(0);
+                    Provider.of<CurrentScreenProvider>(context, listen: false)
+                        .changeScreen(index: 1);
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,

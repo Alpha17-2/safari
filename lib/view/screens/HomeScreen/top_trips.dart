@@ -29,7 +29,7 @@ class TopTrips extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
                 child: CachedNetworkImage(
                   imageUrl: place.images.first.toString(),
-                  height: displayHeight(context) * 0.24,
+                  height: displayHeight(context) * 0.3,
                   width: displayWidth(context) * 0.5,
                   fit: BoxFit.cover,
                   progressIndicatorBuilder: (context, url, progress) => Center(
@@ -92,7 +92,7 @@ class TopTrips extends StatelessWidget {
     final List<PlaceModel> places =
         Provider.of<PlacesProvider>(context).getTopTrips;
     return SizedBox(
-        height: displayHeight(context) * 0.35,
+        height: displayHeight(context) * 0.4,
         width: displayWidth(context),
         child: ListView.builder(
           scrollDirection: Axis.horizontal,

@@ -8,11 +8,11 @@ import 'package:safari/controller/providers/search_screen_provider.dart';
 
 class PopularCategories extends StatelessWidget {
   final List<Map<String, dynamic>> popularCategories = [
-    {'type': 'Mountain', 'icon': CustomIcons.mountainIcon,'index': 0},
-    {'type': 'Mall', 'icon': CustomIcons.mallIcon,'index': 1},
-    {'type': 'Park', 'icon': CustomIcons.parkIcon,'index': 2},
-    {'type': 'Lake', 'icon': CustomIcons.lakeIcon,'index': 4},
-    {'type': 'Beach', 'icon': CustomIcons.beachIcon,'index': 5},
+    {'type': 'Mountain', 'icon': CustomIcons.mountainIcon, 'index': 1},
+    {'type': 'Mall', 'icon': CustomIcons.mallIcon, 'index': 2},
+    {'type': 'Park', 'icon': CustomIcons.parkIcon, 'index': 3},
+    {'type': 'Lake', 'icon': CustomIcons.lakeIcon, 'index': 5},
+    {'type': 'Beach', 'icon': CustomIcons.beachIcon, 'index': 6},
   ];
 
   @override
@@ -29,8 +29,10 @@ class PopularCategories extends StatelessWidget {
               padding: const EdgeInsets.only(right: 16.0),
               child: InkWell(
                 onTap: () {
-                  Provider.of<SearchScreenProvider>(context,listen: false).setSelectedIndex(popularCategories[index]['index']!);
-                  Provider.of<CurrentScreenProvider>(context,listen: false).changeScreen(index: 1);
+                  Provider.of<SearchScreenProvider>(context, listen: false)
+                      .setSelectedIndex(popularCategories[index]['index']!);
+                  Provider.of<CurrentScreenProvider>(context, listen: false)
+                      .changeScreen(index: 1);
                 },
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -47,8 +49,8 @@ class PopularCategories extends StatelessWidget {
                     Expanded(
                       child: Text(
                         popularCategories[index]['type']!,
-                        style:
-                            GoogleFonts.aldrich(color: Colors.teal, fontSize: 14),
+                        style: GoogleFonts.aldrich(
+                            color: Colors.teal, fontSize: 14),
                       ),
                     )
                   ],
